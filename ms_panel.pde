@@ -127,14 +127,70 @@ void drawMSShapes() {
     // vertex(-10, 0);
     // vertex(-10, -10);
     // endShape(CLOSE);
-    // 右肩
-    // beginShape();
-    // vertex(-12, -54);
-    // vertex(-28, -56);
-    // vertex(-30, -40);
-    // vertex(-18, -36);
-    // vertex(-12, -40);
-    // endShape(CLOSE);
+    // 右腕
+    beginShape();
+    vertex(-45, -60);
+    vertex(-57, -63);
+    vertex(-52, -51);
+    vertex(-56, -45);
+    vertex(-63, -42);
+    vertex(-66, -47);
+    vertex(-67, -54);
+    // TODO シールド外側
+    vertex(-69, -60);
+    bezierVertex(-85, -40, -87, -20, -89, 0);
+    vertex(-84, 11);
+    vertex(-79, 8);
+    vertex(-76, 8);
+    vertex(-75, 11);
+    vertex(-72, 2);
+    vertex(-72, 9);
+    vertex(-68, 3);
+    vertex(-66, 8);
+    vertex(-59, 9);
+    vertex(-57, 8);
+    vertex(-54, 5);
+    vertex(-55, 3);
+    vertex(-56, 0);
+    vertex(-56, 1);
+    vertex(-59, 0);
+    vertex(-61, -4);
+    vertex(-63, -3);
+    vertex(-63, -7);
+    vertex(-60, -11);
+    vertex(-60, -16);
+    vertex(-55, -21);
+    vertex(-54, -27);
+    vertex(-50, -31);
+    vertex(-49, -44);
+    vertex(-45, -47);
+    vertex(-38, -52);
+    vertex(-40, -55);
+    endShape(CLOSE);
+    // 右腕シールド
+    beginShape();
+    vertex(-63, -42);
+    vertex(-60, -39);
+    vertex(-68, -17);
+    vertex(-76, 8);
+    vertex(-79, 8);
+    endShape();
+    // 右腕シールド装飾1
+    beginShape();
+    vertex(-68, -17);
+    vertex(-76, 8);
+    vertex(-79, 8);
+    vertex(-75, -16);
+    vertex(-71, -17);
+    endShape(CLOSE);
+    // 右腕シールド装飾2
+    beginShape();
+    vertex(-69, -60);
+    vertex(-76, -35);
+    vertex(-75, -31);
+    vertex(-81, -7);
+    vertex(-89, 0);
+    endShape();
     // 左肩
     beginShape();
     vertex(79, -84);
@@ -177,33 +233,70 @@ void drawMSShapes() {
     vertex(-44, -78);
     vertex(-51, -78);
     endShape(CLOSE);
-    // 腕右
-    // beginShape();
-    // vertex(18, -36);
-    // vertex(24, -34);
-    // vertex(26, -10);
-    // vertex(20, -8);
-    // vertex(14, -10);
-    // vertex(12, -34);
-    // endShape(CLOSE);
-    // 手左
-    // beginShape();
-    // vertex(-26, -10);
-    // vertex(-28, -4);
-    // vertex(-24, 0);
-    // vertex(-18, 0);
-    // vertex(-14, -4);
-    // vertex(-16, -10);
-    // endShape(CLOSE);
-    // 手右
-    // beginShape();
-    // vertex(26, -10);
-    // vertex(28, -4);
-    // vertex(24, 0);
-    // vertex(18, 0);
-    // vertex(14, -4);
-    // vertex(16, -10);
-    // endShape(CLOSE);
+    // 左腕
+    beginShape();
+    vertex(45, -60);
+    vertex(57, -63);
+    vertex(52, -51);
+    vertex(56, -45);
+    vertex(63, -42);
+    vertex(66, -47);
+    vertex(67, -54);
+    // TODO シールド外側
+    vertex(69, -60);
+    bezierVertex(85, -40, 87, -20, 89, 0);
+    vertex(84, 11);
+    vertex(79, 8);
+    vertex(76, 8);
+    vertex(75, 11);
+    vertex(72, 2);
+    vertex(72, 9);
+    vertex(68, 3);
+    vertex(66, 8);
+    vertex(59, 9);
+    vertex(57, 8);
+    vertex(54, 5);
+    vertex(55, 3);
+    vertex(56, 0);
+    vertex(56, 1);
+    vertex(59, 0);
+    vertex(61, -4);
+    vertex(63, -3);
+    vertex(63, -7);
+    vertex(60, -11);
+    vertex(60, -16);
+    vertex(55, -21);
+    vertex(54, -27);
+    vertex(50, -31);
+    vertex(49, -44);
+    vertex(45, -47);
+    vertex(38, -52);
+    vertex(40, -55);
+    endShape(CLOSE);
+    // 左腕シールド
+    beginShape();
+    vertex(63, -42);
+    vertex(60, -39);
+    vertex(68, -17);
+    vertex(76, 8);
+    vertex(79, 8);
+    endShape();
+    // 左腕シールド装飾1
+    beginShape();
+    vertex(68, -17);
+    vertex(76, 8);
+    vertex(79, 8);
+    vertex(75, -16);
+    vertex(71, -17);
+    endShape(CLOSE);
+    // 左腕シールド装飾2
+    beginShape();
+    vertex(69, -60);
+    vertex(76, -35);
+    vertex(75, -31);
+    vertex(81, -7);
+    vertex(89, 0);
+    endShape();
     // 左脚
     beginShape();
     vertex(9, -16);
