@@ -1,0 +1,247 @@
+// ============================================================
+//  左上：MSシルエットパネル
+// ============================================================
+
+void drawMSPanel(float px, float py, float pw, float ph) {
+    panelTitle(px, py, pw, "[ MS-00X :: MOBILE SUIT UPLINK ]");
+    pushMatrix();
+    translate(px + pw / 2, py + ph / 2 + 10);
+    if (msOpacity > 0) {
+        drawMSGlow();
+        drawMSBody(msOpacity);
+        if (funnelActive)
+            drawFunnels(funnelT);
+        drawEnergyMeter();
+    }
+
+    popMatrix();
+}
+
+void drawMSGlow() {
+    noFill();
+    strokeWeight(3);
+    stroke(red(COL_MAIN), green(COL_MAIN), blue(COL_MAIN), 40);
+    drawMSShapes();
+}
+
+void drawMSBody(float op) {
+    noFill();
+    strokeWeight(0.8);
+    stroke(red(COL_MAIN), green(COL_MAIN), blue(COL_MAIN),
+           flickerOpacity * op * 255);
+    drawMSShapes();
+
+    // 胸のコアサークル
+    noFill();
+    stroke(red(COL_ACCENT), green(COL_ACCENT), blue(COL_ACCENT), op * 220);
+    strokeWeight(1);
+    ellipse(0, -45, 6, 6);
+    noStroke();
+    fill(red(COL_ACCENT), green(COL_ACCENT), blue(COL_ACCENT), op * 200);
+    ellipse(0, -45, 2.4, 2.4);
+
+    // 目
+    noFill();
+    stroke(68, 255, 255, op * 255);
+    strokeWeight(1.2);
+    line(-7, -78, -3, -78);
+    line(3, -78, 7, -78);
+
+    // 胸ディテールライン
+    stroke(red(COL_CMD), green(COL_CMD), blue(COL_CMD), op * 180);
+    strokeWeight(0.5);
+    line(-6, -50, 6, -50);
+    line(-8, -42, 8, -42);
+}
+
+void drawMSShapes() {
+    // ここの頂点座標を変えるとMSの形が変わります
+    noFill();
+    // 胴体
+    beginShape();
+    vertex(0, -70);
+    vertex(12, -56);
+    vertex(12, -20);
+    vertex(0, -14);
+    vertex(-12, -20);
+    vertex(-12, -56);
+    endShape(CLOSE);
+    // 頭
+    beginShape();
+    vertex(0, -88);
+    vertex(3, -82);
+    vertex(6, -84);
+    vertex(8, -84);
+    vertex(10, -92);
+    vertex(16, -93);
+    vertex(11, -82);
+    vertex(14, -78);
+    vertex(9, -76);
+    vertex(7, -72);
+    vertex(4, -70);
+    vertex(0, -64);
+    vertex(-4, -70);
+    vertex(-7, -72);
+    vertex(-9, -76);
+    vertex(-14, -78);
+    vertex(-11, -82);
+    vertex(-16, -93);
+    vertex(-10, -92);
+    vertex(-8, -84);
+    vertex(-6, -84);
+    vertex(-3, -82);
+    endShape(CLOSE);
+    // Vフィン左
+    // beginShape(); vertex(-10,-90); vertex(-16,-96); vertex(-14,-82);
+    // vertex(-10,-82); endShape(CLOSE);
+    beginShape();
+    vertex(-10, -96);
+    vertex(-16, -102);
+    vertex(-14, -90);
+    vertex(-10, -82);
+    endShape(CLOSE);
+    // Vフィン右
+    beginShape();
+    vertex(10, -90);
+    vertex(16, -96);
+    vertex(14, -82);
+    vertex(10, -82);
+    endShape(CLOSE);
+    // 腰
+    beginShape();
+    vertex(0, -14);
+    vertex(10, -10);
+    vertex(10, 0);
+    vertex(-10, 0);
+    vertex(-10, -10);
+    endShape(CLOSE);
+    // 肩左
+    beginShape();
+    vertex(-12, -54);
+    vertex(-28, -56);
+    vertex(-30, -40);
+    vertex(-18, -36);
+    vertex(-12, -40);
+    endShape(CLOSE);
+    // 肩右
+    beginShape();
+    vertex(12, -54);
+    vertex(28, -56);
+    vertex(30, -40);
+    vertex(18, -36);
+    vertex(12, -40);
+    endShape(CLOSE);
+    // 腕左
+    beginShape();
+    vertex(-18, -36);
+    vertex(-24, -34);
+    vertex(-26, -10);
+    vertex(-20, -8);
+    vertex(-14, -10);
+    vertex(-12, -34);
+    endShape(CLOSE);
+    // 腕右
+    beginShape();
+    vertex(18, -36);
+    vertex(24, -34);
+    vertex(26, -10);
+    vertex(20, -8);
+    vertex(14, -10);
+    vertex(12, -34);
+    endShape(CLOSE);
+    // 手左
+    beginShape();
+    vertex(-26, -10);
+    vertex(-28, -4);
+    vertex(-24, 0);
+    vertex(-18, 0);
+    vertex(-14, -4);
+    vertex(-16, -10);
+    endShape(CLOSE);
+    // 手右
+    beginShape();
+    vertex(26, -10);
+    vertex(28, -4);
+    vertex(24, 0);
+    vertex(18, 0);
+    vertex(14, -4);
+    vertex(16, -10);
+    endShape(CLOSE);
+    // 脚左
+    beginShape();
+    vertex(-10, 0);
+    vertex(-10, 8);
+    vertex(-16, 10);
+    vertex(-20, 40);
+    vertex(-16, 42);
+    vertex(-4, 42);
+    vertex(-2, 10);
+    vertex(-4, 0);
+    endShape(CLOSE);
+    // 脚右
+    beginShape();
+    vertex(10, 0);
+    vertex(10, 8);
+    vertex(16, 10);
+    vertex(20, 40);
+    vertex(16, 42);
+    vertex(4, 42);
+    vertex(2, 10);
+    vertex(4, 0);
+    endShape(CLOSE);
+    // 足左
+    beginShape();
+    vertex(-20, 42);
+    vertex(-24, 48);
+    vertex(-24, 56);
+    vertex(-4, 56);
+    vertex(-2, 48);
+    vertex(-4, 42);
+    endShape(CLOSE);
+    // 足右
+    beginShape();
+    vertex(20, 42);
+    vertex(24, 48);
+    vertex(24, 56);
+    vertex(4, 56);
+    vertex(2, 48);
+    vertex(4, 42);
+    endShape(CLOSE);
+}
+
+void drawFunnels(float t) {
+    noFill();
+    stroke(red(COL_MAIN), green(COL_MAIN), blue(COL_MAIN), msOpacity * 200);
+    strokeWeight(0.5);
+    // {x, y, w, h, 角度, 時間係数}
+    float[][] f = {
+        {-44, -64, 8, 14, -15, t * 1.0},
+        {44, -64, 8, 14, 15, t * 1.1},
+        {-50, -40, 6, 12, -20, t * 0.9},
+        {50, -40, 6, 12, 20, t * 1.2},
+    };
+    for (float[] fn : f) {
+        pushMatrix();
+        translate(fn[0], fn[1] + sin(fn[5]) * 3);
+        rotate(radians(fn[4] + sin(fn[5]) * 5));
+        rect(-fn[2] / 2, -fn[3] / 2, fn[2], fn[3], 1);
+        popMatrix();
+    }
+}
+
+void drawEnergyMeter() {
+    noFill();
+    stroke(COL_DIM);
+    strokeWeight(0.5);
+    rect(-18, 68, 36, 4, 1);
+    if (energyBar > 0) {
+        int barCol = lerpColor(COL_MAIN, COL_OK, energyBar / 36.0);
+        noStroke();
+        fill(red(barCol), green(barCol), blue(barCol), 180);
+        rect(-18, 68, energyBar, 4, 1);
+    }
+    stroke(COL_BORDER);
+    strokeWeight(0.3);
+    for (int i = 0; i < 3; i++)
+        line(-40, 74 + i * 5, 40, 74 + i * 5);
+}
