@@ -32,13 +32,13 @@ void drawMSBody(float op) {
     drawMSShapes();
 
     // 胸のコアサークル
-    noFill();
-    stroke(red(COL_ACCENT), green(COL_ACCENT), blue(COL_ACCENT), op * 220);
-    strokeWeight(1);
-    ellipse(0, -45, 6, 6);
-    noStroke();
-    fill(red(COL_ACCENT), green(COL_ACCENT), blue(COL_ACCENT), op * 200);
-    ellipse(0, -45, 2.4, 2.4);
+    // noFill();
+    // stroke(red(COL_ACCENT), green(COL_ACCENT), blue(COL_ACCENT), op * 220);
+    // strokeWeight(1);
+    // ellipse(0, -45, 6, 6);
+    // noStroke();
+    // fill(red(COL_ACCENT), green(COL_ACCENT), blue(COL_ACCENT), op * 200);
+    // ellipse(0, -45, 2.4, 2.4);
 
     // 目
     noFill();
@@ -48,10 +48,10 @@ void drawMSBody(float op) {
     line(3, -78, 7, -78);
 
     // 胸ディテールライン
-    stroke(red(COL_CMD), green(COL_CMD), blue(COL_CMD), op * 180);
-    strokeWeight(0.5);
-    line(-6, -50, 6, -50);
-    line(-8, -42, 8, -42);
+    // stroke(red(COL_CMD), green(COL_CMD), blue(COL_CMD), op * 180);
+    // strokeWeight(0.5);
+    // line(-6, -50, 6, -50);
+    // line(-8, -42, 8, -42);
 }
 
 void drawMSShapes() {
@@ -106,37 +106,35 @@ void drawMSShapes() {
     vertex(-3, -82);
     endShape(CLOSE);
     // Vフィン左
-    // beginShape(); vertex(-10,-90); vertex(-16,-96); vertex(-14,-82);
-    // vertex(-10,-82); endShape(CLOSE);
-    beginShape();
-    vertex(-10, -96);
-    vertex(-16, -102);
-    vertex(-14, -90);
-    vertex(-10, -82);
-    endShape(CLOSE);
+    // beginShape();
+    // vertex(-10, -96);
+    // vertex(-16, -102);
+    // vertex(-14, -90);
+    // vertex(-10, -82);
+    // endShape(CLOSE);
     // Vフィン右
-    beginShape();
-    vertex(10, -90);
-    vertex(16, -96);
-    vertex(14, -82);
-    vertex(10, -82);
-    endShape(CLOSE);
+    // beginShape();
+    // vertex(10, -90);
+    // vertex(16, -96);
+    // vertex(14, -82);
+    // vertex(10, -82);
+    // endShape(CLOSE);
     // 腰
-    beginShape();
-    vertex(0, -14);
-    vertex(10, -10);
-    vertex(10, 0);
-    vertex(-10, 0);
-    vertex(-10, -10);
-    endShape(CLOSE);
-    // 肩左
-    beginShape();
-    vertex(-12, -54);
-    vertex(-28, -56);
-    vertex(-30, -40);
-    vertex(-18, -36);
-    vertex(-12, -40);
-    endShape(CLOSE);
+    // beginShape();
+    // vertex(0, -14);
+    // vertex(10, -10);
+    // vertex(10, 0);
+    // vertex(-10, 0);
+    // vertex(-10, -10);
+    // endShape(CLOSE);
+    // 右肩
+    // beginShape();
+    // vertex(-12, -54);
+    // vertex(-28, -56);
+    // vertex(-30, -40);
+    // vertex(-18, -36);
+    // vertex(-12, -40);
+    // endShape(CLOSE);
     // 左肩
     beginShape();
     vertex(79, -84);
@@ -180,71 +178,167 @@ void drawMSShapes() {
     vertex(-51, -78);
     endShape(CLOSE);
     // 腕右
-    beginShape();
-    vertex(18, -36);
-    vertex(24, -34);
-    vertex(26, -10);
-    vertex(20, -8);
-    vertex(14, -10);
-    vertex(12, -34);
-    endShape(CLOSE);
+    // beginShape();
+    // vertex(18, -36);
+    // vertex(24, -34);
+    // vertex(26, -10);
+    // vertex(20, -8);
+    // vertex(14, -10);
+    // vertex(12, -34);
+    // endShape(CLOSE);
     // 手左
-    beginShape();
-    vertex(-26, -10);
-    vertex(-28, -4);
-    vertex(-24, 0);
-    vertex(-18, 0);
-    vertex(-14, -4);
-    vertex(-16, -10);
-    endShape(CLOSE);
+    // beginShape();
+    // vertex(-26, -10);
+    // vertex(-28, -4);
+    // vertex(-24, 0);
+    // vertex(-18, 0);
+    // vertex(-14, -4);
+    // vertex(-16, -10);
+    // endShape(CLOSE);
     // 手右
+    // beginShape();
+    // vertex(26, -10);
+    // vertex(28, -4);
+    // vertex(24, 0);
+    // vertex(18, 0);
+    // vertex(14, -4);
+    // vertex(16, -10);
+    // endShape(CLOSE);
+    // 左脚
     beginShape();
-    vertex(26, -10);
-    vertex(28, -4);
-    vertex(24, 0);
+    vertex(9, -16);
+    vertex(13, -17);
+    vertex(12, -20);
+    vertex(12, -22);
+    vertex(21, -20);
+    vertex(24, -21);
+    vertex(29, -16);
+    vertex(26, -14);
+    vertex(31, -9);
+    vertex(31, -2);
+    vertex(35, 0);
+    vertex(34, 5);
+    vertex(38, 8);
+    vertex(41, 14);
+    vertex(50, 16);
+    vertex(48, 23);
+    vertex(49, 25);
+    vertex(56, 39);
+    vertex(55, 43);
+    vertex(59, 47);
+    vertex(66, 51);
+    vertex(63, 55);
+    vertex(65, 64);
+    vertex(63, 55);
+    vertex(70, 84);
+    vertex(76, 90);
+    vertex(77, 109);
+    vertex(77, 118);
+    vertex(73, 122);
+    vertex(64, 119);
+    vertex(60, 110);
+    vertex(52, 92);
+    vertex(55, 87);
+    vertex(50, 71);
+    vertex(49, 65);
+    vertex(47, 66);
+    vertex(41, 61);
+    vertex(44, 57);
+    vertex(41, 55);
+    vertex(39, 46);
+    vertex(37, 46);
+    vertex(30, 31);
+    vertex(27, 27);
+    vertex(26, 18);
+    vertex(19, 16);
+    vertex(21, 11);
+    vertex(23, 9);
+    vertex(19, 6);
     vertex(18, 0);
-    vertex(14, -4);
-    vertex(16, -10);
+    vertex(12, -2);
+    vertex(15, -9);
+    vertex(8, -7);
     endShape(CLOSE);
-    // 脚左
+    // 右脚
     beginShape();
-    vertex(-10, 0);
-    vertex(-10, 8);
-    vertex(-16, 10);
-    vertex(-20, 40);
-    vertex(-16, 42);
-    vertex(-4, 42);
-    vertex(-2, 10);
-    vertex(-4, 0);
+    vertex(-9, -16);
+    vertex(-13, -17);
+    vertex(-12, -20);
+    vertex(-12, -22);
+    vertex(-21, -20);
+    vertex(-24, -21);
+    vertex(-29, -16);
+    vertex(-26, -14);
+    vertex(-31, -9);
+    vertex(-31, -2);
+    vertex(-35, 0);
+    vertex(-34, 5);
+    vertex(-38, 8);
+    vertex(-41, 14);
+    vertex(-50, 16);
+    vertex(-48, 23);
+    vertex(-49, 25);
+    vertex(-56, 39);
+    vertex(-55, 43);
+    vertex(-59, 47);
+    vertex(-66, 51);
+    vertex(-63, 55);
+    vertex(-65, 64);
+    vertex(-63, 55);
+    vertex(-70, 84);
+    vertex(-76, 90);
+    vertex(-77, 109);
+    vertex(-77, 118);
+    vertex(-73, 122);
+    vertex(-64, 119);
+    vertex(-60, 110);
+    vertex(-52, 92);
+    vertex(-55, 87);
+    vertex(-50, 71);
+    vertex(-49, 65);
+    vertex(-47, 66);
+    vertex(-41, 61);
+    vertex(-44, 57);
+    vertex(-41, 55);
+    vertex(-39, 46);
+    vertex(-37, 46);
+    vertex(-30, 31);
+    vertex(-27, 27);
+    vertex(-26, 18);
+    vertex(-19, 16);
+    vertex(-21, 11);
+    vertex(-23, 9);
+    vertex(-19, 6);
+    vertex(-18, 0);
+    vertex(-12, -2);
+    vertex(-15, -9);
+    vertex(-8, -7);
     endShape(CLOSE);
-    // 脚右
+    // 右足
     beginShape();
-    vertex(10, 0);
-    vertex(10, 8);
-    vertex(16, 10);
-    vertex(20, 40);
-    vertex(16, 42);
-    vertex(4, 42);
-    vertex(2, 10);
-    vertex(4, 0);
+    vertex(-58, 68);
+    vertex(-70, 84);
+    vertex(-76, 90);
+    vertex(-77, 109);
+    vertex(-77, 118);
+    vertex(-73, 122);
+    vertex(-64, 119);
+    vertex(-60, 110);
+    vertex(-52, 92);
+    vertex(-55, 87);
     endShape(CLOSE);
-    // 足左
+    // 左足
     beginShape();
-    vertex(-20, 42);
-    vertex(-24, 48);
-    vertex(-24, 56);
-    vertex(-4, 56);
-    vertex(-2, 48);
-    vertex(-4, 42);
-    endShape(CLOSE);
-    // 足右
-    beginShape();
-    vertex(20, 42);
-    vertex(24, 48);
-    vertex(24, 56);
-    vertex(4, 56);
-    vertex(2, 48);
-    vertex(4, 42);
+    vertex(58, 68);
+    vertex(70, 84);
+    vertex(76, 90);
+    vertex(77, 109);
+    vertex(77, 118);
+    vertex(73, 122);
+    vertex(64, 119);
+    vertex(60, 110);
+    vertex(52, 92);
+    vertex(55, 87);
     endShape(CLOSE);
 }
 
