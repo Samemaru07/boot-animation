@@ -433,6 +433,46 @@ void drawMSShapes() {
     vertex(52, 92);
     vertex(55, 87);
     endShape(CLOSE);
+
+    // 背部スタビライザー(上部左側)
+    beginShape();
+    vertex(1, -131);
+    vertex(2, -89);
+    endShape();
+    // 背部スタビライザー(上部右側)
+    beginShape();
+    vertex(-1, -131);
+    vertex(-2, -89);
+    endShape();
+    beginShape();
+    vertex(1, -131);
+    vertex(-1, -131);
+    endShape();
+    // 背部スタビライザー(下部右側)
+    beginShape();
+    vertex(2, 0);
+    vertex(1, 95);
+    endShape();
+    // 背部スタビライザー(下部左側)
+    beginShape();
+    vertex(-2, 0);
+    vertex(-1, 95);
+    endShape();
+    beginShape();
+    vertex(1, 95);
+    vertex(-1, 95);
+    endShape();
+    // 背部スタビライザー装飾
+    beginShape();
+    vertex(2, -104);
+    vertex(4, -104);
+    vertex(4, -89);
+    endShape();
+    beginShape();
+    vertex(-2, -104);
+    vertex(-4, -104);
+    vertex(-4, -89);
+    endShape();
 }
 
 void drawFunnels(float t) {
