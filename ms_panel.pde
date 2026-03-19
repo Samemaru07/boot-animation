@@ -137,22 +137,47 @@ void drawMSShapes() {
     vertex(-18, -36);
     vertex(-12, -40);
     endShape(CLOSE);
-    // 肩右
+    // 左肩
     beginShape();
-    vertex(12, -54);
-    vertex(28, -56);
-    vertex(30, -40);
-    vertex(18, -36);
-    vertex(12, -40);
+    vertex(79, -84);
+    vertex(72, -80);
+    vertex(73, -80);
+    vertex(57, -63);
+    vertex(48, -58);
+    vertex(45, -60);
+    vertex(39, -56);
+    vertex(36, -49);
+    vertex(30, -47);
+    vertex(24, -53);
+    vertex(22, -52);
+    vertex(20, -53);
+    vertex(11, -47);
+    vertex(14, -63);
+    vertex(21, -66);
+    vertex(25, -73);
+    vertex(44, -78);
+    vertex(51, -78);
     endShape(CLOSE);
-    // 腕左
+    // 右肩
     beginShape();
-    vertex(-18, -36);
-    vertex(-24, -34);
-    vertex(-26, -10);
-    vertex(-20, -8);
-    vertex(-14, -10);
-    vertex(-12, -34);
+    vertex(-79, -84);
+    vertex(-72, -80);
+    vertex(-73, -80);
+    vertex(-57, -63);
+    vertex(-48, -58);
+    vertex(-45, -60);
+    vertex(-39, -56);
+    vertex(-36, -49);
+    vertex(-30, -47);
+    vertex(-24, -53);
+    vertex(-22, -52);
+    vertex(-20, -53);
+    vertex(-11, -47);
+    vertex(-14, -63);
+    vertex(-21, -66);
+    vertex(-25, -73);
+    vertex(-44, -78);
+    vertex(-51, -78);
     endShape(CLOSE);
     // 腕右
     beginShape();
