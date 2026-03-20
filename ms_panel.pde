@@ -837,6 +837,100 @@ void drawLabels(float op) {
     }
     textSize(9);
     text("ALERT TYPE :  1", -290, -135);
+
+    // ===== 機体諸元 =====
+    textFont(createFont("Orbitron", 19));
+    textAlign(LEFT, TOP);
+
+    // タイトル
+    fill(255, 170, 50, op * 255);
+    textSize(11);
+    text("SPEC", -300, -116); // -110 → -113
+
+    // タイトル下線
+    stroke(255, 170, 50, op * 255);
+    strokeWeight(0.8);
+    line(-300, -104, -180, -104); // -98 → -101
+
+    // 諸元リスト
+    noStroke();
+    textSize(8);
+    float sx = -300;
+    float sy = -99; // -90 → -93
+    float sh = 11;  // 13 → 11
+
+    String[][] specs = {
+        {"TYPE", "Salvator-Model"},
+        {"PREV", "Mk.X Alles-Reviced"},
+        {"HEIGHT", "42.8 m"},
+        {"WEIGHT", "384.7 t"},
+        {"ARMOR", "Silicon-Composite Type-VII"},
+        {"REACTOR", "31,400 kW"},
+        {"THRUST", "148,200 kN"},
+        {"OP.TIME", "847:32:11"},
+        {"MAINTENANCE", "2152.09.21"},
+        {"PILOT", "MAKABE, K"},
+    };
+
+    for (int i = 0; i < specs.length; i++) {
+        float y = sy + i * sh;
+
+        fill(255, 170, 50, op * 160);
+        textSize(8);
+        text(specs[i][0], sx, y);
+
+        fill(255, 170, 50, op * 100);
+        text(":", sx + 80, y);
+
+        fill(255, 170, 50, op * 255);
+        text(specs[i][1], sx + 90, y);
+    }
+    // ===== 武装リスト =====
+    // textFont(createFont("Orbitron", 19));
+    // textAlign(LEFT, TOP);
+
+    // タイトル
+    // fill(255, 170, 50, op * 255);
+    // textSize(11);
+    // text("WEAPONS", -300, -110);
+
+    // タイトル下線（タイトルより少し長め）
+    // stroke(255, 170, 50, op * 255);
+    // strokeWeight(0.8);
+    // line(-300, -98, -180, -98);
+
+    // 武装リスト本体
+    // noStroke();
+    // textSize(8);
+    // float wx = -300; // X座標
+    // float wy = -90;  // 最初のY座標
+    // float wh = 13;   // 行間
+
+    // String[][] weapons = {
+    //   {"R-SHIELD", "x1"},   {"R-BLADE", "x1"},     {"L-SHIELD", "x1"},
+    //{"L-BLADE", "x1"},    {"ANCHOR UNIT", "x8"}, {"FENRIR", "x1"},
+    // {"STABILIZER", "x1"},
+    //};
+
+    // for (int i = 0; i < weapons.length; i++) {
+    //   float y = wy + i * wh;
+
+    // > マーク
+    // fill(255, 170, 50, op * 180);
+    // text(">", wx, y);
+
+    // 武装名
+    //       fill(255, 170, 50, op * 255);
+    //      text(weapons[i][0], wx + 12, y);
+
+    // 数量
+    //       fill(255, 170, 50, op * 180);
+    //       text(weapons[i][1], wx + 95, y);
+
+    // [OK]
+    //      fill(100, 220, 100, op * 255);
+    //    text("[OK]", wx + 115, y);
+    //}
 }
 
 void drawEnergyMeter() {
