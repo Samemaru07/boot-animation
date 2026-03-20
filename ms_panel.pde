@@ -122,12 +122,12 @@ void drawMSShapes() {
     endShape();
     beginShape();
     vertex(65, 12);
-    bezierVertex(64, 23, 63, 35, 65, 46);
-    bezierVertex(63, 38, 62, 30, 60, 20);
+    bezierVertex(64, 23, 68, 35, 74, 49);
+    bezierVertex(63, 38, 62, 30, 59, 20);
     vertex(59, 20);
     vertex(58, 21);
     vertex(55, 18);
-    bezierVertex(49, 0, 48, -22, 41, -47);
+    bezierVertex(49, 0, 48, -22, 35, -47);
     endShape();
 
     // ここからは左から
@@ -179,12 +179,12 @@ void drawMSShapes() {
     endShape();
     beginShape();
     vertex(-65, 12);
-    bezierVertex(-64, 23, -63, 35, -65, 46);
-    bezierVertex(-63, 38, -62, 30, -60, 20);
+    bezierVertex(-64, 23, -68, 35, -74, 49);
+    bezierVertex(-63, 38, -62, 30, -59, 20);
     vertex(-59, 20);
     vertex(-58, 21);
     vertex(-55, 18);
-    bezierVertex(-49, 0, -48, -22, -41, -47);
+    bezierVertex(-49, 0, -48, -22, -35, -47);
     endShape();
     // 右腕側の翼の装飾
     beginShape();
@@ -195,6 +195,83 @@ void drawMSShapes() {
     endShape();
 
     // なんか伸びるやつの線(区切り)
+    // 左腕側
+    beginShape();
+    vertex(61, 18);
+    vertex(61, 11);
+    endShape();
+    beginShape();
+    vertex(61, 20);
+    vertex(59, 11);
+    endShape();
+    beginShape();
+    vertex(58, 21);
+    vertex(56, 7);
+    endShape();
+    beginShape();
+    vertex(56, -4);
+    vertex(50, -28);
+    endShape();
+    beginShape();
+    vertex(54, -1);
+    vertex(44, -45);
+    endShape();
+    beginShape();
+    vertex(60, -4);
+    vertex(56, -18);
+    endShape();
+    beginShape();
+    vertex(41, -33);
+    vertex(43, -33);
+    vertex(47, -22);
+    vertex(48, -22);
+    // bezierVertex(52, -25, 56, -15, 58, -13);
+    endShape();
+    // 右腕側
+    beginShape();
+    vertex(-61, 18);
+    vertex(-61, 11);
+    endShape();
+    beginShape();
+    vertex(-61, 20);
+    vertex(-59, 11);
+    endShape();
+    beginShape();
+    vertex(-58, 21);
+    vertex(-56, 7);
+    endShape();
+    beginShape();
+    vertex(-56, -4);
+    vertex(-50, -28);
+    endShape();
+    beginShape();
+    vertex(-54, -1);
+    vertex(-44, -45);
+    endShape();
+    beginShape();
+    vertex(-60, -4);
+    vertex(-56, -18);
+    endShape();
+    beginShape();
+    vertex(-43, -33);
+    vertex(-41, -33);
+    vertex(-43, -33);
+    vertex(-47, -22);
+    vertex(-48, -22);
+    endShape();
+    // 上側装飾
+    // 左腕側上
+    beginShape();
+    vertex(27, -100);
+    vertex(30, -100);
+    vertex(44, -117);
+    endShape();
+    // 右腕側上
+    beginShape();
+    vertex(-27, -100);
+    vertex(-30, -100);
+    vertex(-44, -117);
+    endShape();
 
     // Vフィン左
     // beginShape();
@@ -563,6 +640,160 @@ void drawMSShapes() {
     vertex(-2, -104);
     vertex(-4, -104);
     vertex(-4, -89);
+    endShape();
+
+    // === その他装飾 ===
+    // 腰の下のやつ
+    beginShape();
+    vertex(-1, 21);
+    vertex(1, 21);
+    endShape();
+    // 右足
+    beginShape();
+    vertex(-58, 68);
+    vertex(-65, 78);
+    bezierVertex(-66, 83, -67, 88, -65, 94);
+    bezierVertex(-60, 89, -55, 83, -55, 77);
+    endShape(CLOSE);
+    beginShape();
+    vertex(-75, 119);
+    vertex(-72, 104);
+    vertex(-69, 111);
+    vertex(-63, 106);
+    vertex(-67, 119);
+    endShape();
+    // 左足
+    beginShape();
+    vertex(58, 68);
+    vertex(65, 78);
+    bezierVertex(66, 83, 67, 88, 65, 94);
+    bezierVertex(60, 89, 55, 83, 55, 77);
+    endShape(CLOSE);
+    beginShape();
+    vertex(75, 119);
+    vertex(72, 104);
+    vertex(69, 111);
+    vertex(63, 106);
+    vertex(67, 119);
+    endShape();
+    // 右膝
+    beginShape();
+    vertex(32, 12);
+    vertex(37, 15);
+    vertex(38, 12);
+    vertex(44, 21);
+    vertex(49, 39);
+    vertex(47, 43);
+    vertex(41, 41);
+    vertex(30, 26);
+    vertex(27, 16);
+    vertex(31, 17);
+    endShape(CLOSE);
+    beginShape();
+    vertex(31, 17);
+    vertex(38, 31);
+    vertex(42, 33);
+    endShape();
+    beginShape();
+    vertex(37, 15);
+    vertex(43, 29);
+    vertex(42, 33);
+    endShape();
+    beginShape();
+    vertex(36, 25);
+    vertex(40, 27);
+    vertex(40, 23);
+    endShape();
+    // 左膝
+    beginShape();
+    vertex(-32, 12);
+    vertex(-37, 15);
+    vertex(-38, 12);
+    vertex(-44, 21);
+    vertex(-49, 39);
+    vertex(-47, 43);
+    vertex(-41, 41);
+    vertex(-30, 26);
+    vertex(-27, 16);
+    vertex(-31, 17);
+    endShape(CLOSE);
+    beginShape();
+    vertex(-31, 17);
+    vertex(-38, 31);
+    vertex(-42, 33);
+    endShape();
+    beginShape();
+    vertex(-37, 15);
+    vertex(-43, 29);
+    vertex(-42, 33);
+    endShape();
+    beginShape();
+    vertex(-36, 25);
+    vertex(-40, 27);
+    vertex(-40, 23);
+    endShape();
+    // 左肩
+    beginShape();
+    vertex(47, -60);
+    vertex(54, -64);
+    vertex(56, -68);
+    vertex(76, -82);
+    endShape();
+    beginShape();
+    vertex(32, -73);
+    vertex(30, -64);
+    vertex(37, -64);
+    vertex(67, -81);
+    endShape();
+    // 右肩
+    beginShape();
+    vertex(-47, -60);
+    vertex(-54, -64);
+    vertex(-56, -68);
+    vertex(-76, -82);
+    endShape();
+    beginShape();
+    vertex(-32, -73);
+    vertex(-30, -64);
+    vertex(-37, -64);
+    vertex(-67, -81);
+    endShape();
+    // 腰の真ん中
+    beginShape();
+    vertex(2, -26);
+    vertex(2, -17);
+    vertex(0, -10);
+    vertex(-2, -17);
+    vertex(-2, -26);
+    endShape(CLOSE);
+    // 腹
+    beginShape();
+    vertex(6, -31);
+    vertex(-5, -35);
+    endShape();
+    beginShape();
+    vertex(-5, -35);
+    vertex(5, -46);
+    endShape();
+    // 左手
+    beginShape();
+    vertex(64, -4);
+    vertex(68, 1);
+    endShape();
+    beginShape();
+    vertex(65, -1);
+    vertex(60, 4);
+    vertex(55, 3);
+    endShape();
+    // 右手
+    beginShape();
+    vertex(-64, -4);
+    vertex(-68, 1);
+    endShape();
+    beginShape();
+    vertex(-65, -1);
+    vertex(-60, 4);
+    vertex(-55, 3);
     endShape();
 }
 
