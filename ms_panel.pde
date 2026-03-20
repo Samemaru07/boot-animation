@@ -6,8 +6,10 @@ void drawMSPanel(float px, float py, float pw, float ph) {
     panelTitle(px, py, pw, "[ MARK ALLES :: FAFNER UPLINK ]");
     pushMatrix();
     translate(px + pw / 2, py + ph / 2 + 10);
+    scale(1.5);
     if (msOpacity > 0) {
         drawMSBody(msOpacity);
+        drawLabels(msOpacity);
         drawEnergyMeter();
     }
     popMatrix();
@@ -770,6 +772,53 @@ void drawMSShapes() {
     vertex(-60, 4);
     vertex(-55, 3);
     endShape();
+}
+
+void drawLabels(float op) {
+    stroke(255, 170, 50, op * 255);
+    strokeWeight(1.2);
+    noFill();
+
+    // 折れ線
+    float x1 = 76, y1 = -57;
+    float x2 = 100, y2 = -80;
+    float x3 = 125, y3 = -80;
+
+    // 枠線
+    int x4 = 118, y4 = -83;
+    int x5 = 200, y5 = -83;
+
+    beginShape();
+    vertex(x1, y1);
+    vertex(x2, y2);
+    vertex(x3, y3);
+    endShape();
+
+    beginShape();
+    vertex(x4, y4);
+    vertex(x5, y5);
+    endShape();
+
+    // テキスト
+    fill(255, 170, 50, op * 255);
+    noStroke();
+    textAlign(LEFT, TOP);
+    textFont(createFont("Orbitron", 19));
+
+    textSize(13);
+    text("Alvis", 110, -116);
+
+    textSize(19);
+    text("Mk-Alles", 110, -102);
+
+    textSize(9);
+    text("Kazuki Makabe", 130, -80);
+
+    if (frameCount % 60 < 45) {
+        fill(150, 80, 0, op * 255);
+        noStroke();
+        rect(207, -90, 8, 8);
+    }
 }
 
 void drawEnergyMeter() {
