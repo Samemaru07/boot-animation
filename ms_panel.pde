@@ -819,6 +819,24 @@ void drawLabels(float op) {
         noStroke();
         rect(207, -90, 8, 8);
     }
+
+    // ===== At: Burg + アラートレベル =====
+    textFont(createFont("Orbitron", 19));
+    textAlign(LEFT, TOP);
+
+    // At: Burg
+    fill(255, 170, 50, op * 255);
+    textSize(12);
+    text("At: Burg", -300, -150);
+
+    // アラートレベル（点滅）
+    if (frameCount % 60 < 45) {
+        fill(255, 50, 50, op * 255); // 赤で点滅
+    } else {
+        fill(255, 50, 50, op * 80); // 暗くなる
+    }
+    textSize(9);
+    text("ALERT TYPE :  1", -290, -135);
 }
 
 void drawEnergyMeter() {
