@@ -41,11 +41,11 @@ void drawMSBody(float op) {
     // ellipse(0, -45, 2.4, 2.4);
 
     // 目
-    noFill();
-    stroke(68, 255, 255, op * 255);
-    strokeWeight(1.2);
-    line(-7, -78, -3, -78);
-    line(3, -78, 7, -78);
+    // noFill();
+    // stroke(68, 255, 255, op * 255);
+    // strokeWeight(1.2);
+    // line(-7, -78, -3, -78);
+    // line(3, -78, 7, -78);
 
     // 胸ディテールライン
     // stroke(red(COL_CMD), green(COL_CMD), blue(COL_CMD), op * 180);
@@ -81,7 +81,8 @@ void drawMSShapes() {
     vertex(-5, -35);
     vertex(-14, -39);
     vertex(-13, -44);
-    endShape(CLOSE);
+    endShape();
+
     // 頭
     beginShape();
     vertex(0, -88);
@@ -105,6 +106,96 @@ void drawMSShapes() {
     vertex(-6, -84);
     vertex(-3, -82);
     endShape(CLOSE);
+    // 左腕側の翼
+    beginShape();
+    vertex(15, -85);
+    vertex(18, -86);
+    vertex(32, -108);
+    vertex(32, -107);
+    bezierVertex(33, -112, 44, -119, 50, -122);
+    bezierVertex(38, -111, 38, -107, 38, -84);
+    vertex(42, -81);
+    endShape();
+    beginShape();
+    vertex(55, -58);
+    bezierVertex(56, -55, 58, -51, 59, -47);
+    endShape();
+    beginShape();
+    vertex(65, 12);
+    bezierVertex(64, 23, 63, 35, 65, 46);
+    bezierVertex(63, 38, 62, 30, 60, 20);
+    vertex(59, 20);
+    vertex(58, 21);
+    vertex(55, 18);
+    bezierVertex(49, 0, 48, -22, 41, -47);
+    endShape();
+
+    // ここからは左から
+    beginShape();
+    vertex(11, -72);
+    vertex(8, -66);
+    vertex(0, -56);
+    vertex(-8, -66);
+    vertex(-11, -72);
+    endShape();
+    beginShape();
+    vertex(12, -60);
+    vertex(7, -53);
+    vertex(8, -51);
+    vertex(10, -50);
+    vertex(2, -46);
+    vertex(4, -51);
+    vertex(2, -50);
+    vertex(0, -48);
+    vertex(-2, -50);
+    vertex(-4, -51);
+    vertex(-2, -46);
+    vertex(-10, -50);
+    vertex(-8, -51);
+    vertex(-7, -53);
+    vertex(-12, -60);
+    endShape();
+    beginShape();
+    vertex(31, -77);
+    vertex(27, -77);
+    vertex(22, -73);
+    vertex(15, -69);
+    endShape();
+    // ここまで
+
+    // 右腕側の翼
+    beginShape();
+    vertex(-15, -85);
+    vertex(-18, -86);
+    vertex(-32, -108);
+    vertex(-32, -107);
+    bezierVertex(-33, -112, -44, -119, -50, -122);
+    bezierVertex(-38, -111, -38, -107, -38, -84);
+    vertex(-42, -81);
+    endShape();
+    beginShape();
+    vertex(-55, -58);
+    bezierVertex(-56, -55, -58, -51, -59, -47);
+    endShape();
+    beginShape();
+    vertex(-65, 12);
+    bezierVertex(-64, 23, -63, 35, -65, 46);
+    bezierVertex(-63, 38, -62, 30, -60, 20);
+    vertex(-59, 20);
+    vertex(-58, 21);
+    vertex(-55, 18);
+    bezierVertex(-49, 0, -48, -22, -41, -47);
+    endShape();
+    // 右腕側の翼の装飾
+    beginShape();
+    vertex(-31, -77);
+    vertex(-27, -77);
+    vertex(-22, -73);
+    vertex(-15, -69);
+    endShape();
+
+    // なんか伸びるやつの線(区切り)
+
     // Vフィン左
     // beginShape();
     // vertex(-10, -96);
@@ -130,7 +221,7 @@ void drawMSShapes() {
     // 右腕
     beginShape();
     vertex(-45, -60);
-    vertex(-57, -63);
+    vertex(-47, -63);
     vertex(-52, -51);
     vertex(-56, -45);
     vertex(-63, -42);
@@ -236,7 +327,7 @@ void drawMSShapes() {
     // 左腕
     beginShape();
     vertex(45, -60);
-    vertex(57, -63);
+    vertex(47, -63);
     vertex(52, -51);
     vertex(56, -45);
     vertex(63, -42);
@@ -450,12 +541,12 @@ void drawMSShapes() {
     endShape();
     // 背部スタビライザー(下部右側)
     beginShape();
-    vertex(2, 0);
+    vertex(4, 0);
     vertex(1, 95);
     endShape();
     // 背部スタビライザー(下部左側)
     beginShape();
-    vertex(-2, 0);
+    vertex(-4, 0);
     vertex(-1, 95);
     endShape();
     beginShape();
