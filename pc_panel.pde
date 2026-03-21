@@ -362,7 +362,7 @@ void drawPCLabels(float op) {
     textSize(roleNameFontSize);
     text("Siegfried System", cpuX3 - 10, cpuY3 - 30);
     textSize(managerNameFontSize);
-    text("Sui Kaburagi", cpuX3 + 85, cpuY3);
+    text("Sui Kaburagi", cpuX3 + 95, cpuY3);
 
     // ===== Motherboard =====
     noFill();
@@ -465,7 +465,7 @@ void drawPCLabels(float op) {
     // 枠線
     beginShape();
     vertex(stX3 - 10, stY3 - 6);
-    vertex(stX3 + 169, stY3 - 6);
+    vertex(stX3 + 124, stY3 - 6);
     endShape();
 
     // テキスト
@@ -476,7 +476,7 @@ void drawPCLabels(float op) {
     text("All Alvis Data", stX3 - 10, stY3 - 30);
 
     textSize(managerNameFontSize);
-    text("Kyosuke Mizoguchi", stX3 + 55, stY3);
+    text("Kyosuke Mizoguchi", stX3 + 10, stY3);
 
     // ===== PSU（主電源） =====
     stroke(255, 170, 50, op * 255);
