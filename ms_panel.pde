@@ -885,52 +885,53 @@ void drawLabels(float op) {
         fill(255, 170, 50, op * 255);
         text(specs[i][1], sx + 90, y);
     }
+
     // ===== 武装リスト =====
-    // textFont(createFont("Orbitron", 19));
-    // textAlign(LEFT, TOP);
+    textFont(createFont("Orbitron", 19));
+    textAlign(LEFT, TOP);
 
     // タイトル
-    // fill(255, 170, 50, op * 255);
-    // textSize(11);
-    // text("WEAPONS", -300, -110);
+    fill(255, 170, 50, op * 255);
+    textSize(11);
+    text("WEAPONS", -300, 20);
 
     // タイトル下線（タイトルより少し長め）
-    // stroke(255, 170, 50, op * 255);
-    // strokeWeight(0.8);
-    // line(-300, -98, -180, -98);
+    stroke(255, 170, 50, op * 255);
+    strokeWeight(0.8);
+    line(-300, 32, -180, 32);
 
     // 武装リスト本体
-    // noStroke();
-    // textSize(8);
-    // float wx = -300; // X座標
-    // float wy = -90;  // 最初のY座標
-    // float wh = 13;   // 行間
+    noStroke();
+    textSize(8);
+    float wx = -300; // X座標
+    float wy = 38;   // 最初のY座標
+    float wh = 11;   // 行間
 
-    // String[][] weapons = {
-    //   {"R-SHIELD", "x1"},   {"R-BLADE", "x1"},     {"L-SHIELD", "x1"},
-    //{"L-BLADE", "x1"},    {"ANCHOR UNIT", "x8"}, {"FENRIR", "x1"},
-    // {"STABILIZER", "x1"},
-    //};
+    String[][] weapons = {
+        {"R-SHIELD", "x1"},   {"R-BLADE", "x1"},     {"L-SHIELD", "x1"},
+        {"L-BLADE", "x1"},    {"ANCHOR UNIT", "x8"}, {"FENRIR", "x1"},
+        {"STABILIZER", "x1"},
+    };
 
-    // for (int i = 0; i < weapons.length; i++) {
-    //   float y = wy + i * wh;
+    for (int i = 0; i < weapons.length; i++) {
+        float y = wy + i * wh;
 
-    // > マーク
-    // fill(255, 170, 50, op * 180);
-    // text(">", wx, y);
+        // > マーク
+        fill(255, 170, 50, op * 180);
+        text(">", wx, y);
 
-    // 武装名
-    //       fill(255, 170, 50, op * 255);
-    //      text(weapons[i][0], wx + 12, y);
+        // 武装名
+        fill(255, 170, 50, op * 255);
+        text(weapons[i][0], wx + 12, y);
 
-    // 数量
-    //       fill(255, 170, 50, op * 180);
-    //       text(weapons[i][1], wx + 95, y);
+        // 数量
+        fill(255, 170, 50, op * 180);
+        text(weapons[i][1], wx + 95, y);
 
-    // [OK]
-    //      fill(100, 220, 100, op * 255);
-    //    text("[OK]", wx + 115, y);
-    //}
+        // [OK]
+        fill(100, 220, 100, op * 255);
+        text("[OK]", wx + 115, y);
+    }
 }
 
 void drawEnergyMeter() {
