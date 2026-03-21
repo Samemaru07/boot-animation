@@ -220,6 +220,31 @@ void drawPCCase(float px, float py, float pw, float ph) {
     line(topMX, topMY, botMX, botMY);
     line(leftMX, leftMY, rightMX, rightMY);
 
+    // === RAM ===
+    stroke(COL_MAIN);
+    strokeWeight(2);
+    noFill();
+
+    // 奥のRAM（左）
+    beginShape();
+    vertex(-10, -70); // 左上
+    vertex(-4, -73);  // 右上
+    vertex(-4, -28);  // 右下
+    vertex(-10, -25); // 左下
+    endShape(CLOSE);
+
+    // 手前のRAM（右）
+    beginShape();
+    vertex(-2, -70); // 左上
+    vertex(4, -73);  // 右上
+    vertex(4, -28);  // 右下
+    vertex(-2, -25); // 左下
+    endShape(CLOSE);
+
+    // マザボに刺さっている部分（下端の線を太く）
+    strokeWeight(2.0);
+    line(-10, -25, -4, -28); // 奥のRAM下端
+    line(-2, -25, 4, -28);   // 手前のRAM下端
     // === 正面：電源ボタン ===
     // ellipse(40, -88, 8, 8);
 
