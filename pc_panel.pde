@@ -4,11 +4,12 @@
 
 void drawPCPanel(float px, float py, float pw, float ph) {
     panelTitle(px, py, pw, "[ ALVIS CDC TERMINAL ]");
-    float cx = px + pw / 2;
+    float cx = px + pw / 2 - 100;
     float cy = py + ph / 2;
     pushMatrix();
     translate(cx, cy);
     drawPCCase(px, py, pw, ph);
+    drawPCLabels(msOpacity);
     popMatrix();
 }
 
@@ -315,11 +316,253 @@ void drawPCCase(float px, float py, float pw, float ph) {
     line(cfX2, cfY2, cfX4, cfY4);
 
     // === デバッグ：マウス座標表示 ===
-    float mx = mouseX - (px + pw / 2); // パネル中心からの相対座標
+    float mx = mouseX - (px + pw / 2 - 100); // パネル中心からの相対座標
     float my = mouseY - (py + ph / 2);
     fill(255, 255, 255);
     noStroke();
     textSize(10);
     textAlign(LEFT, TOP);
     text((int)mx + ", " + (int)my, mx + 5, my);
+}
+
+void drawPCLabels(float op) {
+    textFont(createFont("Orbitron", 19));
+    noFill();
+
+    int partsNameFontSize = 13;
+    int roleNameFontSize = 19;
+    int managerNameFontSize = 12;
+
+    // ===== CPU =====
+    float cpuX1 = -35, cpuY1 = -53; // 起点（部品上）
+    float cpuX2 = 29, cpuY2 = -219; // 折れ点
+    float cpuX3 = 60, cpuY3 = -219; // 終点
+
+    // 折れ線
+    stroke(255, 170, 50, op * 255);
+    strokeWeight(1.2);
+    beginShape();
+    vertex(cpuX1, cpuY1);
+    vertex(cpuX2, cpuY2);
+    vertex(cpuX3, cpuY3);
+    endShape();
+
+    // 枠線
+    stroke(255, 170, 50, op * 255);
+    beginShape();
+    vertex(cpuX3 - 10, cpuY3 - 6);
+    vertex(cpuX3 + 165, cpuY3 - 6);
+    endShape();
+
+    fill(255, 170, 50, op * 255);
+    noStroke();
+    textAlign(LEFT, TOP);
+    textSize(partsNameFontSize);
+    text("CPU", cpuX3 - 10, cpuY3 - 45);
+    textSize(roleNameFontSize);
+    text("Siegfried System", cpuX3 - 10, cpuY3 - 30);
+    textSize(managerNameFontSize);
+    text("Sui Kaburagi", cpuX3 + 85, cpuY3);
+
+    // ===== Motherboard =====
+    noFill();
+    stroke(255, 170, 50, op * 255);
+    float motherX1 = -18, motherY1 = -55;
+    float motherX2 = 151, motherY2 = -146;
+    float motherX3 = motherX2 + 31, motherY3 = motherY2;
+
+    // 折れ線
+    beginShape();
+    vertex(motherX1, motherY1);
+    vertex(motherX2, motherY2);
+    vertex(motherX3, motherY3);
+    endShape();
+
+    // 枠線
+    beginShape();
+    vertex(motherX3 - 10, motherY3 - 6);
+    vertex(motherX3 + 232, motherY3 - 6);
+    endShape();
+
+    // テキスト
+    textSize(partsNameFontSize);
+    text("Motherboard", motherX3 - 10, motherY3 - 45);
+
+    textSize(roleNameFontSize);
+    text("CDC Integrated Platform", motherX3 - 10, motherY3 - 30);
+
+    textSize(managerNameFontSize);
+    text("Fumihiko Makabe", motherX3 + 140, motherY3);
+
+    // ===== GPU =====
+    float gpuX1 = 4, gpuY1 = -5;
+    float gpuX2 = 151, gpuY2 = -73;
+    float gpuX3 = gpuX2 + 31, gpuY3 = gpuY2;
+
+    // 折れ線
+    beginShape();
+    vertex(gpuX1, gpuY1);
+    vertex(gpuX2, gpuY2);
+    vertex(gpuX3, gpuY3);
+    endShape();
+
+    // 枠線
+    beginShape();
+    vertex(gpuX3 - 10, gpuY3 - 6);
+    vertex(gpuX3 + 370, gpuY3 - 6);
+    endShape();
+
+    // テキスト
+    textSize(partsNameFontSize);
+    text("Graphics Card", gpuX3 - 10, gpuY3 - 45);
+
+    textSize(roleNameFontSize);
+    text("Video Control / Urd Auxiliary System", gpuX3 - 10, gpuY3 - 30);
+
+    textSize(managerNameFontSize);
+    text("Masaki Tatekami", gpuX3 + 275, gpuY3);
+
+    // ===== RAM =====
+    float ramX1 = -4, ramY1 = -44;
+    float ramX2 = 2, ramY2 = 0;
+    float ramX3 = motherX3, ramY3 = ramY2;
+
+    // 折れ線
+    beginShape();
+    vertex(ramX1, ramY1);
+    vertex(ramX2, ramY2);
+    vertex(ramX3, ramY3);
+    endShape();
+
+    // 枠線
+    beginShape();
+    vertex(ramX3 - 10, ramY3 - 6);
+    vertex(ramX3 + 252, ramY3 - 6);
+    endShape();
+
+    // テキスト
+    textSize(partsNameFontSize);
+    text("RAM Disk", ramX3 - 10, ramY3 - 45);
+
+    textSize(roleNameFontSize);
+    text("Solomon's Buffer Memory", ramX3 - 10, ramY3 - 30);
+
+    textSize(managerNameFontSize);
+    text("Kiyomi Kaname", ramX3 + 168, ramY3);
+
+    // ===== Storage =====
+    float stX1 = -75, stY1 = -39;
+    float stX2 = 8, stY2 = 70;
+    float stX3 = motherX3, stY3 = stY2;
+
+    // 折れ線
+    beginShape();
+    vertex(stX1, stY1);
+    vertex(stX2, stY2);
+    vertex(stX3, stY3);
+    endShape();
+
+    // 枠線
+    beginShape();
+    vertex(stX3 - 10, stY3 - 6);
+    vertex(stX3 + 169, stY3 - 6);
+    endShape();
+
+    // テキスト
+    textSize(partsNameFontSize);
+    text("Storage Disk", stX3 - 10, stY3 - 45);
+
+    textSize(roleNameFontSize);
+    text("All Alvis Data", stX3 - 10, stY3 - 30);
+
+    textSize(managerNameFontSize);
+    text("Kyosuke Mizoguchi", stX3 + 55, stY3);
+
+    // ===== PSU（主電源） =====
+    stroke(255, 170, 50, op * 255);
+    strokeWeight(0.8);
+    noFill();
+
+    float psuOX = -320; // PSU原点X
+    float psuOY = 150;  // PSU原点Y
+
+    // 正面（横長の直方体）
+    beginShape();
+    vertex(psuOX, psuOY);
+    vertex(psuOX + 120, psuOY);
+    vertex(psuOX + 120, psuOY + 60);
+    vertex(psuOX, psuOY + 60);
+    endShape(CLOSE);
+
+    // 上面
+    beginShape();
+    vertex(psuOX, psuOY);
+    vertex(psuOX + 120, psuOY);
+    vertex(psuOX + 140, psuOY - 20);
+    vertex(psuOX + 20, psuOY - 20);
+    endShape(CLOSE);
+
+    // 右側面
+    beginShape();
+    vertex(psuOX + 120, psuOY);
+    vertex(psuOX + 140, psuOY - 20);
+    vertex(psuOX + 140, psuOY + 40);
+    vertex(psuOX + 120, psuOY + 60);
+    endShape(CLOSE);
+
+    // 正面：ファン（大型）
+    strokeWeight(1.5);
+    rect(psuOX + 5, psuOY + 5, 50, 50, 2);
+    strokeWeight(0.8);
+    ellipse(psuOX + 30, psuOY + 30, 40, 40);
+    line(psuOX + 30, psuOY + 10, psuOX + 30, psuOY + 50);
+    line(psuOX + 10, psuOY + 30, psuOX + 50, psuOY + 30);
+    line(psuOX + 16, psuOY + 16, psuOX + 44, psuOY + 44);
+    line(psuOX + 44, psuOY + 16, psuOX + 16, psuOY + 44);
+
+    // 正面：コネクタパネル
+    rect(psuOX + 62, psuOY + 5, 50, 50, 1);
+    // コネクタ穴
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 2; j++) {
+            rect(psuOX + 66 + i * 15, psuOY + 9 + j * 20, 10, 14, 1);
+        }
+    }
+
+    // 正面：電源スイッチ
+    ellipse(psuOX + 75, psuOY + 49, 6, 6);
+    // ステータスLED（赤点滅）
+    if (frameCount % 60 < 30) {
+        fill(255, 0, 0, op * 255);
+        noStroke();
+    } else {
+        fill(255, 0, 0, op * 80);
+        noStroke();
+    }
+    ellipse(psuOX + 93, psuOY + 49, 6, 6);
+
+    // 上面：通気スリット
+    stroke(255, 170, 50, op * 255);
+    strokeWeight(0.5);
+    for (int i = 0; i < 5; i++) {
+        line(psuOX + 25 + i * 18, psuOY - 18, psuOX + 35 + i * 18, psuOY - 18);
+    }
+
+    // ラベル
+    fill(255, 170, 50, op * 255);
+    noStroke();
+    textFont(createFont("Orbitron", 19));
+    textAlign(LEFT, TOP);
+    textSize(partsNameFontSize);
+    text("Power Supply Unit", psuOX, psuOY + 70);
+    textSize(roleNameFontSize);
+    text("MAIN POWER SUPPLY", psuOX, psuOY + 88);
+    textSize(managerNameFontSize);
+    // 切断状態の表示（赤点滅）
+    if (frameCount % 60 < 30) {
+        fill(255, 0, 0, op * 255);
+    } else {
+        fill(255, 0, 0, op * 80);
+    }
+    text("[ DISCONNECTED ]", psuOX, psuOY + 115);
 }
