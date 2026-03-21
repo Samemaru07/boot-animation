@@ -910,7 +910,7 @@ void drawLabels(float op) {
 
     String[][] weapons = {
         {"R-SHIELD", "x1"},   {"R-BLADE", "x1"},     {"L-SHIELD", "x1"},
-        {"L-BLADE", "x1"},    {"ANCHOR UNIT", "x8"}, {"FENRIR", "x1"},
+        {"L-BLADE", "x1"},    {"ANCHOR UNIT", "x8"}, {"FENRIR", "x3"},
         {"STABILIZER", "x1"},
     };
 
