@@ -10,6 +10,7 @@ void drawMSPanel(float px, float py, float pw, float ph) {
     if (msOpacity > 0) {
         drawMSBody(msOpacity);
         drawLabels(msOpacity);
+        drawVital(msOpacity);
         drawEnergyMeter();
     }
     popMatrix();
@@ -885,52 +886,160 @@ void drawLabels(float op) {
         fill(255, 170, 50, op * 255);
         text(specs[i][1], sx + 90, y);
     }
+
     // ===== 武装リスト =====
-    // textFont(createFont("Orbitron", 19));
-    // textAlign(LEFT, TOP);
+    textFont(createFont("Orbitron", 19));
+    textAlign(LEFT, TOP);
 
     // タイトル
-    // fill(255, 170, 50, op * 255);
-    // textSize(11);
-    // text("WEAPONS", -300, -110);
+    fill(255, 170, 50, op * 255);
+    textSize(11);
+    text("WEAPONS", -300, 20);
 
     // タイトル下線（タイトルより少し長め）
-    // stroke(255, 170, 50, op * 255);
-    // strokeWeight(0.8);
-    // line(-300, -98, -180, -98);
+    stroke(255, 170, 50, op * 255);
+    strokeWeight(0.8);
+    line(-300, 32, -180, 32);
 
     // 武装リスト本体
-    // noStroke();
-    // textSize(8);
-    // float wx = -300; // X座標
-    // float wy = -90;  // 最初のY座標
-    // float wh = 13;   // 行間
+    noStroke();
+    textSize(8);
+    float wx = -300; // X座標
+    float wy = 38;   // 最初のY座標
+    float wh = 11;   // 行間
 
-    // String[][] weapons = {
-    //   {"R-SHIELD", "x1"},   {"R-BLADE", "x1"},     {"L-SHIELD", "x1"},
-    //{"L-BLADE", "x1"},    {"ANCHOR UNIT", "x8"}, {"FENRIR", "x1"},
-    // {"STABILIZER", "x1"},
-    //};
+    String[][] weapons = {
+        {"R-SHIELD", "x1"},   {"R-BLADE", "x1"},     {"L-SHIELD", "x1"},
+        {"L-BLADE", "x1"},    {"ANCHOR UNIT", "x8"}, {"FENRIR", "x1"},
+        {"STABILIZER", "x1"},
+    };
 
-    // for (int i = 0; i < weapons.length; i++) {
-    //   float y = wy + i * wh;
+    for (int i = 0; i < weapons.length; i++) {
+        float y = wy + i * wh;
 
-    // > マーク
-    // fill(255, 170, 50, op * 180);
-    // text(">", wx, y);
+        // > マーク
+        fill(255, 170, 50, op * 180);
+        text(">", wx, y);
 
-    // 武装名
-    //       fill(255, 170, 50, op * 255);
-    //      text(weapons[i][0], wx + 12, y);
+        // 武装名
+        fill(255, 170, 50, op * 255);
+        text(weapons[i][0], wx + 12, y);
 
-    // 数量
-    //       fill(255, 170, 50, op * 180);
-    //       text(weapons[i][1], wx + 95, y);
+        // 数量
+        fill(255, 170, 50, op * 180);
+        text(weapons[i][1], wx + 95, y);
 
-    // [OK]
-    //      fill(100, 220, 100, op * 255);
-    //    text("[OK]", wx + 115, y);
-    //}
+        // [OK]
+        fill(100, 220, 100, op * 255);
+        text("[OK]", wx + 115, y);
+    }
+
+    // ===== 同化率・炉心出力・推力 =====
+    textFont(createFont("Orbitron", 19));
+    textAlign(LEFT, TOP);
+
+    float ex = 110; // X座標（バイタルサインと揃える）
+    float ey = 40;  // バイタルサインの下
+    float eh = 16;  // 行間
+
+    // タイトル
+    fill(255, 170, 50, op * 255);
+    textSize(11);
+    text("ENERGY STATUS", ex, ey);
+
+    // タイトル下線
+    stroke(255, 170, 50, op * 255);
+    strokeWeight(0.8);
+    line(ex, ey + 12, ex + 180, ey + 12);
+
+    noStroke();
+    String[] eLabels = {"SYNC RATE", "REACTOR", "THRUST"};
+    float[] eVals = {100.0, 100.0, 100.0}; // 後でアニメーション化
+
+    for (int i = 0; i < 3; i++) {
+        float y = ey + 18 + i * eh;
+
+        // ラベル
+        fill(255, 170, 50, op * 180);
+        textSize(8);
+        text(eLabels[i], ex, y);
+
+        // バー背景
+        noStroke();
+        fill(255, 170, 50, op * 40);
+        rect(ex + 70, y, 100, 7, 1);
+
+        // バー本体（MAXで緑）
+        float ratio = eVals[i] / 100.0;
+        int barCol = ratio >= 1.0 ? color(100, 220, 100) : color(255, 170, 50);
+        fill(red(barCol), green(barCol), blue(barCol), op * 255);
+        rect(ex + 70, y, 100 * ratio, 7, 1);
+
+        // 数値
+        fill(255, 170, 50, op * 255);
+        text(int(eVals[i]) + "%", ex + 175, y);
+    }
+}
+
+void drawVital(float op) {
+    float gx = 110; // グラフ左上X
+    float gy = -25; // グラフ左上Y
+    float gw = 180; // グラフ幅
+    float gh = 15;  // 1波形の高さ
+    float gap = 22; // 波形間の間隔
+
+    // タイトル
+    textFont(createFont("Orbitron", 19));
+    textAlign(LEFT, TOP);
+    fill(255, 170, 50, op * 255);
+    textSize(11);
+    text("VITAL SIGN", gx, gy - 16);
+
+    // タイトル下線
+    stroke(255, 170, 50, op * 255);
+    strokeWeight(0.8);
+    line(gx, gy - 4, gx + gw, gy - 4);
+
+    // 波形3本
+    String[] labels = {"SYNC", "ASSML", "NERVE"};
+    color[] cols = {
+        color(100, 220, 100), // 緑
+        color(100, 180, 255), // 青
+        color(255, 170, 50),  // オレンジ
+    };
+    float[] speeds = {0.03, 0.05, 0.04}; // 各波形の速さ
+    float[] scales = {0.8, 1.2, 0.6};    // ノイズのスケール
+
+    noFill();
+    strokeWeight(0.8);
+
+    for (int w = 0; w < 3; w++) {
+        float baseY = gy + w * gap;
+
+        // ラベル
+        noStroke();
+        fill(red(cols[w]), green(cols[w]), blue(cols[w]), op * 180);
+        textSize(7);
+        text(labels[w], gx, baseY);
+
+        // 波形描画
+        stroke(red(cols[w]), green(cols[w]), blue(cols[w]), op * 220);
+        strokeWeight(0.8);
+        noFill();
+        beginShape();
+        for (int x = 0; x < gw; x++) {
+            float n =
+                noise(x * scales[w] * 0.02, frameCount * speeds[w] + w * 10);
+            float y = baseY + 8 + (n - 0.5) * gh;
+            vertex(gx + x, y);
+        }
+        endShape();
+
+        // ベースライン
+        stroke(red(cols[w]), green(cols[w]), blue(cols[w]), op * 40);
+        strokeWeight(0.3);
+        line(gx, baseY + 8, gx + gw, baseY + 8);
+    }
 }
 
 void drawEnergyMeter() {

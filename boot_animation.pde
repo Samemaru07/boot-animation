@@ -13,7 +13,7 @@ void draw() {
     updateAnimations();
 
     float hw = width / 2.0;
-    float hh = height / 2.0;
+    float hh = height * 0.65;
 
     drawPanel(4, 4, hw - 6, hh - 6);
     drawPanel(hw + 2, 4, hw - 6, hh - 6);
