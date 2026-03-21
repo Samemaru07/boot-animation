@@ -245,59 +245,75 @@ void drawPCCase(float px, float py, float pw, float ph) {
     strokeWeight(2.0);
     line(-10, -25, -4, -28); // 奥のRAM下端
     line(-2, -25, 4, -28);   // 手前のRAM下端
-    // === 正面：電源ボタン ===
-    // ellipse(40, -88, 8, 8);
 
-    // === 正面：ドライブベイ ===
-    // rect(-45, -70, 55, 8, 1);
-    // rect(-45, -58, 55, 8, 1);
+    // === CPUクーラー（サイドフロー型） ===
+    stroke(COL_MAIN);
+    strokeWeight(1.2);
+    noFill();
 
-    // === 正面：マザーボードエリア ===
-    // rect(-45, -42, 90, 120, 1);
+    // ヒートシンク本体（塔型・アイソメトリック直方体）
+    // 正面
+    beginShape();
+    vertex(-65, -56);
+    vertex(-35, -56);
+    vertex(-35, -30);
+    vertex(-65, -30);
+    endShape(CLOSE);
 
-    // === 内部：CPU ===
-    // stroke(COL_MAIN, 150);
-    // strokeWeight(0.6);
-    // rect(-35, -35, 25, 25, 1);
-    // CPUピン
-    // for (int i = 0; i < 4; i++) {
-    //   line(-35, -35 + i * 8, -35 - 5, -35 + i * 8);
-    //  line(-10, -35 + i * 8, -10 + 5, -35 + i * 8);
-    // }
-    // CPUファン
-    // ellipse(-22, -22, 22, 22);
-    // line(-22, -33, -22, -11);
-    // line(-33, -22, -11, -22);
+    // 上面
+    beginShape();
+    vertex(-25, -65);
+    vertex(-45, -65);
+    vertex(-65, -56);
+    endShape();
 
-    // === 内部：GPU ===
-    // rect(-42, 10, 75, 20, 1);
-    // ellipse(-22, 20, 14, 14);
-    // ellipse(0, 20, 14, 14);
-    // ellipse(18, 20, 14, 14);
+    // 右側面（変更なし）
+    beginShape();
+    vertex(-35, -56);
+    vertex(-25, -65);
+    vertex(-25, -40);
+    vertex(-35, -30);
+    endShape(CLOSE);
 
-    // === 内部：RAM ===
-    // stroke(COL_MAIN, 150);
-    // rect(5, -35, 6, 45, 1);
-    // rect(14, -35, 6, 45, 1);
-    // rect(23, -35, 6, 45, 1);
+    // ファン外枠
+    float cfX1 = -35, cfY1 = -54; // 左上
+    float cfX2 = -25, cfY2 = -64; // 右上
+    float cfX3 = -24, cfY3 = -40; // 右下
+    float cfX4 = -35, cfY4 = -31; // 左下
 
-    // === 電源ユニット（下部・正面） ===
-    // stroke(COL_MAIN);
-    // strokeWeight(0.8);
-    // rect(-45, 55, 90, 35, 1);
-    // 電源ファン
-    // ellipse(-15, 72, 20, 20);
-    // line(-15, 62, -15, 82);
-    // line(-25, 72, -5, 72);
+    strokeWeight(1.5);
+    beginShape();
+    vertex(cfX1, cfY1);
+    vertex(cfX2, cfY2);
+    vertex(cfX3, cfY3);
+    vertex(cfX4, cfY4);
+    endShape(CLOSE);
 
-    // === 上面ディテール ===
-    // stroke(COL_MAIN, 120);
+    // ファン内部
+    strokeWeight(0.8);
+    float cfCX = (cfX1 + cfX3) / 2;
+    float cfCY = (cfY1 + cfY3) / 2;
 
-    // === 右側面ディテール ===
-    // スリット
-    // for (int i = 0; i < 5; i++) {
-    //    line(65, -80 + i * 20, 85, -105 + i * 20);
-    //}
+    // 円
+    ellipse(cfCX, cfCY, 12, 22);
+
+    // 十字
+    float cfTopMX = (cfX1 + cfX2) / 2;
+    float cfTopMY = (cfY1 + cfY2) / 2;
+    float cfBotMX = (cfX4 + cfX3) / 2;
+    float cfBotMY = (cfY4 + cfY3) / 2;
+    float cfLeftMX = (cfX1 + cfX4) / 2;
+    float cfLeftMY = (cfY1 + cfY4) / 2;
+    float cfRightMX = (cfX2 + cfX3) / 2;
+    float cfRightMY = (cfY2 + cfY3) / 2;
+
+    line(cfTopMX, cfTopMY, cfBotMX, cfBotMY);
+    line(cfLeftMX, cfLeftMY, cfRightMX, cfRightMY);
+
+    // 対角線
+    line(cfX1, cfY1, cfX3, cfY3);
+    line(cfX2, cfY2, cfX4, cfY4);
+
     // === デバッグ：マウス座標表示 ===
     float mx = mouseX - (px + pw / 2); // パネル中心からの相対座標
     float my = mouseY - (py + ph / 2);
