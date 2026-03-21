@@ -565,4 +565,78 @@ void drawPCLabels(float op) {
         fill(255, 0, 0, op * 80);
     }
     text("[ DISCONNECTED ]", psuOX, psuOY + 115);
+
+    // ===== SYSTEM LINK STATUS =====
+    float slX = 120; // 左端X
+    float slY = 130; // 上端Y
+    float slH = 18;  // 行間
+
+    textFont(createFont("Orbitron", 19));
+    textAlign(LEFT, TOP);
+
+    // タイトル
+    fill(255, 170, 50, op * 255);
+    noStroke();
+    textSize(roleNameFontSize);
+    text("SYSTEM LINK STATUS", slX, slY);
+
+    // タイトル下線
+    stroke(255, 170, 50, op * 255);
+    strokeWeight(1.2);
+    line(slX, slY + 22, slX + 220, slY + 22);
+
+    // 接続リスト
+    noStroke();
+    textSize(managerNameFontSize);
+
+    String[][] links = {
+        {"CPU", "AMD Ryzen 7 5700X"},
+        {"MB", "ASUS TUF Gaming B550 Plus"},
+        {"GPU", "NVIDIA GeForce RTX 5060Ti"},
+        {"RAM", "Crucial PRO DDR4-3200 16×2 [GB]"},
+        {"STORAGE", "WD_BLACK SN7100 M.2 PCIe Gen4 1 [TB]"},
+    };
+
+    for (int i = 0; i < links.length; i++) {
+        float y = slY + 30 + i * slH;
+
+        // [ OK ]
+        fill(100, 220, 100, op * 255);
+        text("[ OK ]", slX, y);
+
+        // 部品名
+        fill(255, 170, 50, op * 255);
+        text(links[i][0], slX + 45, y);
+
+        // ドット
+        fill(255, 170, 50, op * 120);
+        text("...........", slX + 95, y);
+
+        // 役割名
+        fill(255, 170, 50, op * 255);
+        text(links[i][1], slX + 155, y);
+    }
+
+    // PSU（切断・赤点滅）
+    float psuLY = slY + 30 + links.length * slH;
+
+    if (frameCount % 60 < 30) {
+        fill(255, 0, 0, op * 255);
+    } else {
+        fill(255, 0, 0, op * 80);
+    }
+    text("[ NO ]", slX, psuLY);
+
+    fill(255, 170, 50, op * 255);
+    text("PSU", slX + 45, psuLY);
+
+    fill(255, 170, 50, op * 120);
+    text("...........", slX + 95, psuLY);
+
+    if (frameCount % 60 < 30) {
+        fill(255, 0, 0, op * 255);
+    } else {
+        fill(255, 0, 0, op * 80);
+    }
+    text("Main Power Supply", slX + 155, psuLY);
 }
