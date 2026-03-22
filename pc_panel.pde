@@ -541,7 +541,7 @@ void drawPCLabels(float op) {
     noFill();
 
     float psuOX = -320; // PSU原点X
-    float psuOY = 150;  // PSU原点Y
+    float psuOY = 200;  // PSU原点Y
 
     // 正面（横長の直方体）
     beginShape();
@@ -696,4 +696,43 @@ void drawPCLabels(float op) {
         fill(255, 0, 0, op * 80);
     }
     text("Main Power Supply", slX + 155, psuLY);
+
+    // ===== PSU 切断線 =====
+    noFill();
+
+    float psuX1 = -175, psuY1 = 208; // 始点
+    float psuX2 = -88, psuY2 = 208;  // 曲がる点
+    float cutX1 = -88, cutY1 = 155;  // 断線直前
+    float cutX = -86, cutY = 149;    // 断線点
+    float cutX2 = -88, cutY2 = 123;  // 断線直後
+    float endX = -88, endY = 84;     // PCケース接続点
+
+    // 接続線（PSU → 断線点）
+    stroke(255, 50, 50, op * 255);
+    strokeWeight(5);
+    beginShape();
+    vertex(psuX1, psuY1);
+    vertex(psuX2, psuY2);
+    vertex(cutX1, cutY1);
+    endShape();
+
+    // 断線マーク（//）
+    stroke(255, 50, 50, op * 255);
+    strokeWeight(5);
+    line(cutX - 15, cutY - 9, cutX + 15, cutY + 9);
+    line(cutX - 14, cutY - 22, cutX + 17, cutY - 3);
+
+    // 破線（断線点 → PCケース）
+    stroke(255, 50, 50, op * 255); // 100 → 255
+    strokeWeight(4);
+    float dashLen = 0.20; // 破線の長さ割合
+    float gapLen = 0.20;  // 隙間を広げる
+    float t = 0;
+    while (t < 1.0) {
+        float t2 = min(t + dashLen, 1.0);
+        float y1 = lerp(cutY2, endY, t);
+        float y2 = lerp(cutY2, endY, t2);
+        line(cutX2, y1, cutX2, y2);
+        t += dashLen + gapLen;
+    }
 }
