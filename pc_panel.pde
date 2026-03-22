@@ -326,9 +326,66 @@ void drawPCCase(float px, float py, float pw, float ph) {
 }
 
 void drawPCLabels(float op) {
-    textFont(createFont("Orbitron", 19));
+    // ===== BRUNHILDE SYSTEM =====
+    float bsX = -350; // 左端X
+    float bsY = -270; // 上端Y
+    float bsW = 330;  // 幅
+    float bsH = 130;  // 高さ
+
+    stroke(255, 170, 50, op * 255);
+    strokeWeight(1.0);
     noFill();
 
+    // 枠
+    rect(bsX, bsY, bsW, bsH, 1);
+
+    // タイトル下線
+    line(bsX, bsY + 26, bsX + bsW, bsY + 26);
+
+    // テキスト
+    textFont(createFont("Orbitron", 19));
+    textAlign(LEFT, TOP);
+    noStroke();
+
+    // タイトル
+    fill(255, 170, 50, op * 255);
+    textSize(21);
+    text("BRUNHILDE SYSTEM", bsX + 8, bsY + 4);
+
+    // STATUS
+    fill(255, 200, 0, op * 255);
+    textSize(14);
+    text("STATUS : RESTRICTED", bsX + 8, bsY + 33);
+
+    // ALERT（赤色・点滅）
+    if (frameCount % 60 < 45) {
+        fill(255, 50, 50, op * 255);
+    } else {
+        fill(255, 50, 50, op * 60);
+    }
+    text("ALERT  : TYPE-1", bsX + 8, bsY + 51);
+
+    // ◆の代わりに小さい四角（点滅）
+    if (frameCount % 60 < 45) {
+        fill(255, 50, 50, op * 255);
+    } else {
+        fill(255, 50, 50, op * 60);
+    }
+    noStroke();
+    rect(bsX + bsW - 22, bsY + 53, 8, 8);
+
+    // MODE
+    fill(255, 80, 80, op * 255);
+    text("MODE   : DEFENCE MODE", bsX + 8, bsY + 69);
+
+    // 詳細情報
+    fill(255, 170, 50, op * 180);
+    textSize(13);
+    text("MAIN PWR LOST. RUNNING ON AUX PWR.", bsX + 20, bsY + 87);
+    text("OP LIMIT 10MIN. NACHTHERE LOCKED.", bsX + 20, bsY + 99);
+
+    // 各ブロック名称
+    noFill();
     int partsNameFontSize = 13;
     int roleNameFontSize = 19;
     int managerNameFontSize = 12;
