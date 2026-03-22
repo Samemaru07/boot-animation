@@ -844,13 +844,17 @@ void drawLabels(float op) {
     text("BLOCK  : B-7", -300, -186);
     text("GATE   : NACHTHERE-03", -300, -174);
 
+    // PILOT（LAUNCHの上）
+    fill(255, 170, 50, op * 200);
+    text("PILOT  : BOARDED", -300, -162);
+
     // LAUNCH : STANDBY（点滅）
     if (frameCount % 60 < 45) {
         fill(255, 200, 0, op * 255);
     } else {
         fill(255, 200, 0, op * 80);
     }
-    text("LAUNCH : STANDBY", -300, -162);
+    text("LAUNCH : STANDBY", -300, -150);
 
     // ALERT（点滅）
     if (frameCount % 60 < 45) {
@@ -859,7 +863,7 @@ void drawLabels(float op) {
         fill(255, 50, 50, op * 80);
     }
     textSize(9);
-    text("ALERT  : TYPE-1", -290, -148);
+    text("ALERT  : TYPE-1", -290, -136);
 
     // ===== 機体諸元 =====
     textFont(createFont("Orbitron", 19));
