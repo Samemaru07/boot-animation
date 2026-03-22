@@ -735,4 +735,81 @@ void drawPCLabels(float op) {
         line(cutX2, y1, cutX2, y2);
         t += dashLen + gapLen;
     }
+
+    // ===== 補助電源 =====
+    float auxOX = -40; // 補助電源原点X
+    float auxOY = 220; // 補助電源原点Y
+
+    stroke(255, 170, 50, op * 255);
+    strokeWeight(1.5);
+    noFill();
+
+    // 正面
+    beginShape();
+    vertex(auxOX, auxOY);
+    vertex(auxOX + 60, auxOY);
+    vertex(auxOX + 60, auxOY + 40);
+    vertex(auxOX, auxOY + 40);
+    endShape(CLOSE);
+
+    // 上面
+    beginShape();
+    vertex(auxOX, auxOY);
+    vertex(auxOX + 60, auxOY);
+    vertex(auxOX + 75, auxOY - 12);
+    vertex(auxOX + 15, auxOY - 12);
+    endShape(CLOSE);
+
+    // 右側面
+    beginShape();
+    vertex(auxOX + 60, auxOY);
+    vertex(auxOX + 75, auxOY - 12);
+    vertex(auxOX + 75, auxOY + 28);
+    vertex(auxOX + 60, auxOY + 40);
+    endShape(CLOSE);
+
+    // 正面：ステータスLED（緑・点滅）
+    if (frameCount % 60 < 45) {
+        fill(100, 220, 100, op * 255);
+        noStroke();
+    } else {
+        fill(100, 220, 100, op * 80);
+        noStroke();
+    }
+    ellipse(auxOX + 10, auxOY + 10, 8, 8);
+
+    // 正面：バッテリーアイコン
+    stroke(255, 170, 50, op * 255);
+    strokeWeight(1.5);
+    noFill();
+    rect(auxOX + 20, auxOY + 8, 30, 18, 1);
+    rect(auxOX + 50, auxOY + 12, 5, 10, 1);
+    // バッテリー残量
+    fill(100, 220, 100, op * 200);
+    noStroke();
+    rect(auxOX + 22, auxOY + 10, 20, 14, 1);
+
+    // ラベル
+    fill(255, 170, 50, op * 255);
+    noStroke();
+    textFont(createFont("Orbitron", 19));
+    textAlign(LEFT, TOP);
+    textSize(19);
+    text("AUX POWER", auxOX, auxOY + 48);
+    textSize(12);
+    fill(255, 170, 50, op * 255); // 緑 → オレンジ
+    text("[ EMERGENCY ACTIVE ]", auxOX, auxOY + 70);
+
+    // ===== 補助電源 → PCケース接続線 =====
+    stroke(100, 220, 100, op * 255);
+    strokeWeight(5);
+    noFill();
+
+    float auxLineX1 = auxOX + 37, auxLineY1 = auxOY - 20; // 補助電源上端
+    float auxLineX2 = auxLineX1, auxLineY2 = 85;          // PCケース左下
+
+    beginShape();
+    vertex(auxLineX1, auxLineY1);
+    vertex(auxLineX2, auxLineY2);
+    endShape();
 }
