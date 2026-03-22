@@ -828,16 +828,30 @@ void drawLabels(float op) {
     // At: Burg
     fill(255, 170, 50, op * 255);
     textSize(12);
-    text("At: Burg", -300, -150);
+    text("At: Burg", -300, -200);
 
-    // アラートレベル（点滅）
+    // BLOCK
+    fill(255, 170, 50, op * 200);
+    textSize(9);
+    text("BLOCK  : B-7", -300, -186);
+    text("GATE   : NACHTHERE-03", -300, -174);
+
+    // LAUNCH : STANDBY（点滅）
     if (frameCount % 60 < 45) {
-        fill(255, 50, 50, op * 255); // 赤で点滅
+        fill(255, 200, 0, op * 255);
     } else {
-        fill(255, 50, 50, op * 80); // 暗くなる
+        fill(255, 200, 0, op * 80);
+    }
+    text("LAUNCH : STANDBY", -300, -162);
+
+    // ALERT（点滅）
+    if (frameCount % 60 < 45) {
+        fill(255, 50, 50, op * 255);
+    } else {
+        fill(255, 50, 50, op * 80);
     }
     textSize(9);
-    text("ALERT TYPE :  1", -290, -135);
+    text("ALERT  : TYPE-1", -290, -148);
 
     // ===== 機体諸元 =====
     textFont(createFont("Orbitron", 19));
