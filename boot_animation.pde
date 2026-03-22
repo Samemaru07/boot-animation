@@ -30,6 +30,25 @@ void draw() {
         fill(255, 0, 0, flickerOpacity * 120);
         rect(hw + 2, 4, hw - 6, hh - 6);
     }
+
+    // デバッグ：接続線の起点・終点確認
+    // hw と hh は上で宣言済みなので削除
+    float msCX = 4 + (hw - 6) / 2;
+    float msCY = 4 + (hh - 6) / 2 + 10;
+
+    float coreX = 650;
+    float coreY = msCY + (-45) * 1.5;
+
+    float pcCX = hw + 2 + (hw - 6) / 2;
+    float pcCY = 4 + (hh - 6) / 2;
+    float pcLeftX = 1150;
+    float pcLeftY = msCY + (-45) * 1.5;
+
+    // 接続線（エネルギーパイプ）
+    int pipeCol = (ePhase >= 3) ? color(100, 220, 100) : color(255, 100, 0);
+    stroke(pipeCol);
+    strokeWeight(8);
+    line(coreX, coreY, pcLeftX, pcLeftY);
 }
 
 void drawPanel(float x, float y, float w, float h) {

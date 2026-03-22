@@ -780,14 +780,18 @@ void drawLabels(float op) {
     strokeWeight(1.2);
     noFill();
 
+    // オフセット（ここを変えると全て連動）
+    float offsetX = 0;   // 左右にずらす
+    float offsetY = -70; // 上下にずらす
+
     // 折れ線
-    float x1 = 76, y1 = -57;
-    float x2 = 100, y2 = -80;
-    float x3 = 125, y3 = -80;
+    float x1 = 46 + offsetX, y1 = -27 + offsetY;
+    float x2 = 100 + offsetX, y2 = -80 + offsetY;
+    float x3 = 125 + offsetX, y3 = -80 + offsetY;
 
     // 枠線
-    int x4 = 118, y4 = -83;
-    int x5 = 200, y5 = -83;
+    float x4 = 118 + offsetX, y4 = -83 + offsetY;
+    float x5 = 200 + offsetX, y5 = -83 + offsetY;
 
     beginShape();
     vertex(x1, y1);
@@ -806,19 +810,23 @@ void drawLabels(float op) {
     textAlign(LEFT, TOP);
     textFont(createFont("Orbitron", 19));
 
+    float labelX = 110 + offsetX;  // テキスト左端X
+    float labelY = -116 + offsetY; // テキスト上端Y
+    float labelGap = 14;           // 行間
+
     textSize(13);
-    text("Alvis", 110, -116);
+    text("Alvis", labelX, labelY);
 
     textSize(19);
-    text("Mk-Alles", 110, -102);
+    text("Mk-Alles", labelX, labelY + labelGap);
 
     textSize(9);
-    text("Kazuki Makabe", 130, -80);
+    text("Kazuki Makabe", labelX + 20, labelY + labelGap * 2 + 8);
 
     if (frameCount % 60 < 45) {
         fill(150, 80, 0, op * 255);
         noStroke();
-        rect(207, -90, 8, 8);
+        rect(labelX + 97, labelY + labelGap + 2, 8, 8);
     }
 
     // ===== At: Burg + アラートレベル =====
@@ -828,16 +836,34 @@ void drawLabels(float op) {
     // At: Burg
     fill(255, 170, 50, op * 255);
     textSize(12);
-    text("At: Burg", -300, -150);
+    text("At: Burg", -300, -200);
 
-    // アラートレベル（点滅）
+    // BLOCK
+    fill(255, 170, 50, op * 200);
+    textSize(9);
+    text("BLOCK  : B-7", -300, -186);
+    text("GATE   : NACHTHERE-03", -300, -174);
+
+    // PILOT（LAUNCHの上）
+    fill(255, 170, 50, op * 200);
+    text("PILOT  : BOARDED", -300, -162);
+
+    // LAUNCH : STANDBY（点滅）
     if (frameCount % 60 < 45) {
-        fill(255, 50, 50, op * 255); // 赤で点滅
+        fill(255, 200, 0, op * 255);
     } else {
-        fill(255, 50, 50, op * 80); // 暗くなる
+        fill(255, 200, 0, op * 80);
+    }
+    text("LAUNCH : STANDBY", -300, -150);
+
+    // ALERT（点滅）
+    if (frameCount % 60 < 45) {
+        fill(255, 50, 50, op * 255);
+    } else {
+        fill(255, 50, 50, op * 80);
     }
     textSize(9);
-    text("ALERT TYPE :  1", -290, -135);
+    text("ALERT  : TYPE-1", -290, -136);
 
     // ===== 機体諸元 =====
     textFont(createFont("Orbitron", 19));
@@ -938,9 +964,12 @@ void drawLabels(float op) {
     textFont(createFont("Orbitron", 19));
     textAlign(LEFT, TOP);
 
-    float ex = 110; // X座標（バイタルサインと揃える）
-    float ey = 40;  // バイタルサインの下
-    float eh = 16;  // 行間
+    float esOffsetX = 0;  // ← ここを変えると全て連動
+    float esOffsetY = 80; // ← ここを変えると全て連動
+
+    float ex = 110 + esOffsetX;
+    float ey = 40 + esOffsetY;
+    float eh = 16;
 
     // タイトル
     fill(255, 170, 50, op * 255);
@@ -954,39 +983,38 @@ void drawLabels(float op) {
 
     noStroke();
     String[] eLabels = {"SYNC RATE", "REACTOR", "THRUST"};
-    float[] eVals = {100.0, 100.0, 100.0}; // 後でアニメーション化
+    float[] eVals = {100.0, 100.0, 100.0};
 
     for (int i = 0; i < 3; i++) {
         float y = ey + 18 + i * eh;
 
-        // ラベル
         fill(255, 170, 50, op * 180);
         textSize(8);
         text(eLabels[i], ex, y);
 
-        // バー背景
         noStroke();
         fill(255, 170, 50, op * 40);
         rect(ex + 70, y, 100, 7, 1);
 
-        // バー本体（MAXで緑）
         float ratio = eVals[i] / 100.0;
         int barCol = ratio >= 1.0 ? color(100, 220, 100) : color(255, 170, 50);
         fill(red(barCol), green(barCol), blue(barCol), op * 255);
         rect(ex + 70, y, 100 * ratio, 7, 1);
 
-        // 数値
         fill(255, 170, 50, op * 255);
         text(int(eVals[i]) + "%", ex + 175, y);
     }
 }
 
 void drawVital(float op) {
-    float gx = 110; // グラフ左上X
-    float gy = -25; // グラフ左上Y
-    float gw = 180; // グラフ幅
-    float gh = 15;  // 1波形の高さ
-    float gap = 22; // 波形間の間隔
+    // オフセット（ここを変えると全て連動）
+    float vOffsetX = 0;        // 左右にずらす
+    float vOffsetY = 80;       // 上下にずらす
+    float gx = 110 + vOffsetX; // グラフ左上X
+    float gy = -25 + vOffsetY; // グラフ左上Y
+    float gw = 180;            // グラフ幅
+    float gh = 15;             // 1波形の高さ
+    float gap = 22;            // 波形間の間隔
 
     // タイトル
     textFont(createFont("Orbitron", 19));
@@ -1003,12 +1031,12 @@ void drawVital(float op) {
     // 波形3本
     String[] labels = {"SYNC", "ASSML", "NERVE"};
     color[] cols = {
-        color(100, 220, 100), // 緑
-        color(100, 180, 255), // 青
-        color(255, 170, 50),  // オレンジ
+        color(100, 220, 100),
+        color(100, 180, 255),
+        color(255, 170, 50),
     };
-    float[] speeds = {0.03, 0.05, 0.04}; // 各波形の速さ
-    float[] scales = {0.8, 1.2, 0.6};    // ノイズのスケール
+    float[] speeds = {0.03, 0.05, 0.04};
+    float[] scales = {0.8, 1.2, 0.6};
 
     noFill();
     strokeWeight(0.8);

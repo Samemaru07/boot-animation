@@ -326,9 +326,66 @@ void drawPCCase(float px, float py, float pw, float ph) {
 }
 
 void drawPCLabels(float op) {
-    textFont(createFont("Orbitron", 19));
+    // ===== BRUNHILDE SYSTEM =====
+    float bsX = -350; // 左端X
+    float bsY = -270; // 上端Y
+    float bsW = 330;  // 幅
+    float bsH = 130;  // 高さ
+
+    stroke(255, 170, 50, op * 255);
+    strokeWeight(1.0);
     noFill();
 
+    // 枠
+    rect(bsX, bsY, bsW, bsH, 1);
+
+    // タイトル下線
+    line(bsX, bsY + 26, bsX + bsW, bsY + 26);
+
+    // テキスト
+    textFont(createFont("Orbitron", 19));
+    textAlign(LEFT, TOP);
+    noStroke();
+
+    // タイトル
+    fill(255, 170, 50, op * 255);
+    textSize(21);
+    text("BRUNHILDE SYSTEM", bsX + 8, bsY + 4);
+
+    // STATUS
+    fill(255, 200, 0, op * 255);
+    textSize(14);
+    text("STATUS : RESTRICTED", bsX + 8, bsY + 33);
+
+    // ALERT（赤色・点滅）
+    if (frameCount % 60 < 45) {
+        fill(255, 50, 50, op * 255);
+    } else {
+        fill(255, 50, 50, op * 60);
+    }
+    text("ALERT  : TYPE-1", bsX + 8, bsY + 51);
+
+    // ◆の代わりに小さい四角（点滅）
+    if (frameCount % 60 < 45) {
+        fill(255, 50, 50, op * 255);
+    } else {
+        fill(255, 50, 50, op * 60);
+    }
+    noStroke();
+    rect(bsX + bsW - 22, bsY + 53, 8, 8);
+
+    // MODE
+    fill(255, 80, 80, op * 255);
+    text("MODE   : DEFENCE MODE", bsX + 8, bsY + 69);
+
+    // 詳細情報
+    fill(255, 170, 50, op * 180);
+    textSize(13);
+    text("MAIN PWR LOST. RUNNING ON AUX PWR.", bsX + 20, bsY + 87);
+    text("OP LIMIT 10MIN. NACHTHERE LOCKED.", bsX + 20, bsY + 99);
+
+    // 各ブロック名称
+    noFill();
     int partsNameFontSize = 13;
     int roleNameFontSize = 19;
     int managerNameFontSize = 12;
@@ -362,7 +419,7 @@ void drawPCLabels(float op) {
     textSize(roleNameFontSize);
     text("Siegfried System", cpuX3 - 10, cpuY3 - 30);
     textSize(managerNameFontSize);
-    text("Sui Kaburagi", cpuX3 + 85, cpuY3);
+    text("Sui Kaburagi", cpuX3 + 95, cpuY3);
 
     // ===== Motherboard =====
     noFill();
@@ -465,7 +522,7 @@ void drawPCLabels(float op) {
     // 枠線
     beginShape();
     vertex(stX3 - 10, stY3 - 6);
-    vertex(stX3 + 169, stY3 - 6);
+    vertex(stX3 + 124, stY3 - 6);
     endShape();
 
     // テキスト
@@ -476,7 +533,7 @@ void drawPCLabels(float op) {
     text("All Alvis Data", stX3 - 10, stY3 - 30);
 
     textSize(managerNameFontSize);
-    text("Kyosuke Mizoguchi", stX3 + 55, stY3);
+    text("Kyosuke Mizoguchi", stX3 + 10, stY3);
 
     // ===== PSU（主電源） =====
     stroke(255, 170, 50, op * 255);
@@ -484,7 +541,7 @@ void drawPCLabels(float op) {
     noFill();
 
     float psuOX = -320; // PSU原点X
-    float psuOY = 150;  // PSU原点Y
+    float psuOY = 200;  // PSU原点Y
 
     // 正面（横長の直方体）
     beginShape();
@@ -639,4 +696,120 @@ void drawPCLabels(float op) {
         fill(255, 0, 0, op * 80);
     }
     text("Main Power Supply", slX + 155, psuLY);
+
+    // ===== PSU 切断線 =====
+    noFill();
+
+    float psuX1 = -175, psuY1 = 208; // 始点
+    float psuX2 = -88, psuY2 = 208;  // 曲がる点
+    float cutX1 = -88, cutY1 = 155;  // 断線直前
+    float cutX = -86, cutY = 149;    // 断線点
+    float cutX2 = -88, cutY2 = 123;  // 断線直後
+    float endX = -88, endY = 84;     // PCケース接続点
+
+    // 接続線（PSU → 断線点）
+    stroke(255, 50, 50, op * 255);
+    strokeWeight(5);
+    beginShape();
+    vertex(psuX1, psuY1);
+    vertex(psuX2, psuY2);
+    vertex(cutX1, cutY1);
+    endShape();
+
+    // 断線マーク（//）
+    stroke(255, 50, 50, op * 255);
+    strokeWeight(5);
+    line(cutX - 15, cutY - 9, cutX + 15, cutY + 9);
+    line(cutX - 14, cutY - 22, cutX + 17, cutY - 3);
+
+    // 破線（断線点 → PCケース）
+    stroke(255, 50, 50, op * 255); // 100 → 255
+    strokeWeight(4);
+    float dashLen = 0.20; // 破線の長さ割合
+    float gapLen = 0.20;  // 隙間を広げる
+    float t = 0;
+    while (t < 1.0) {
+        float t2 = min(t + dashLen, 1.0);
+        float y1 = lerp(cutY2, endY, t);
+        float y2 = lerp(cutY2, endY, t2);
+        line(cutX2, y1, cutX2, y2);
+        t += dashLen + gapLen;
+    }
+
+    // ===== 補助電源 =====
+    float auxOX = -40; // 補助電源原点X
+    float auxOY = 220; // 補助電源原点Y
+
+    stroke(255, 170, 50, op * 255);
+    strokeWeight(1.5);
+    noFill();
+
+    // 正面
+    beginShape();
+    vertex(auxOX, auxOY);
+    vertex(auxOX + 60, auxOY);
+    vertex(auxOX + 60, auxOY + 40);
+    vertex(auxOX, auxOY + 40);
+    endShape(CLOSE);
+
+    // 上面
+    beginShape();
+    vertex(auxOX, auxOY);
+    vertex(auxOX + 60, auxOY);
+    vertex(auxOX + 75, auxOY - 12);
+    vertex(auxOX + 15, auxOY - 12);
+    endShape(CLOSE);
+
+    // 右側面
+    beginShape();
+    vertex(auxOX + 60, auxOY);
+    vertex(auxOX + 75, auxOY - 12);
+    vertex(auxOX + 75, auxOY + 28);
+    vertex(auxOX + 60, auxOY + 40);
+    endShape(CLOSE);
+
+    // 正面：ステータスLED（緑・点滅）
+    if (frameCount % 60 < 45) {
+        fill(100, 220, 100, op * 255);
+        noStroke();
+    } else {
+        fill(100, 220, 100, op * 80);
+        noStroke();
+    }
+    ellipse(auxOX + 10, auxOY + 10, 8, 8);
+
+    // 正面：バッテリーアイコン
+    stroke(255, 170, 50, op * 255);
+    strokeWeight(1.5);
+    noFill();
+    rect(auxOX + 20, auxOY + 8, 30, 18, 1);
+    rect(auxOX + 50, auxOY + 12, 5, 10, 1);
+    // バッテリー残量
+    fill(100, 220, 100, op * 200);
+    noStroke();
+    rect(auxOX + 22, auxOY + 10, 20, 14, 1);
+
+    // ラベル
+    fill(255, 170, 50, op * 255);
+    noStroke();
+    textFont(createFont("Orbitron", 19));
+    textAlign(LEFT, TOP);
+    textSize(19);
+    text("AUX POWER", auxOX, auxOY + 48);
+    textSize(12);
+    fill(255, 170, 50, op * 255); // 緑 → オレンジ
+    text("[ EMERGENCY ACTIVE ]", auxOX, auxOY + 70);
+
+    // ===== 補助電源 → PCケース接続線 =====
+    stroke(100, 220, 100, op * 255);
+    strokeWeight(5);
+    noFill();
+
+    float auxLineX1 = auxOX + 37, auxLineY1 = auxOY - 20; // 補助電源上端
+    float auxLineX2 = auxLineX1, auxLineY2 = 85;          // PCケース左下
+
+    beginShape();
+    vertex(auxLineX1, auxLineY1);
+    vertex(auxLineX2, auxLineY2);
+    endShape();
 }
