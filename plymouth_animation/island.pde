@@ -129,73 +129,87 @@ void drawIslandShape(float a) {
     popStyle();
 }
 
-// 半球シールド（偽装鏡面）
+// 偽装鏡面
 void drawHemisphere(float a) {
     pushStyle();
-
-    // hemisphereDissolve = 0〜1 で上から溶けていく
-    // dissolveY：これより上の部分が消えている（-1〜+1の正規化）
-    float dissolveY = map(hemisphereDissolve, 0, 1, -1.2, 1.2);
-
-    float rw = 180; // 半球の横幅半径
-    float rh = 100; // 半球の縦幅半径（半分）
-
-    // 半球を細かいセグメントで描き、dissolveY以下の部分のみ描く
-    int segments = 60;
     noFill();
 
-    for (int i = 0; i < segments; i++) {
-        float t1 = map(i, 0, segments, -PI, 0); // 上半円（-π〜0）
-        float t2 = map(i + 1, 0, segments, -PI, 0);
+    int rings = 20;
+    float rwMax = 180;
+    float rhMax = 80; // アイソメ用に平たく
 
-        float x1 = cos(t1) * rw;
-        float y1 = sin(t1) * rh;
-        float x2 = cos(t2) * rw;
-        float y2 = sin(t2) * rh;
+    // 頂上の楕円
+    float topT = 0.0;
+    float topRw = 5;
+    float topRh = 5;
+    float topY = -rhMax * 1.2;
 
-        // 正規化したy座標（-1=上端, +1=下端）
-        float ny = map(y1, -rh, rh, -1, 1);
-        if (ny < dissolveY)
-            continue; // dissolveYより上は描かない
+    float botT = 1.0;
+    float botRw = rwMax;
+    float botRh = rhMax;
+    float botY = 0;
 
-        // 溶ける境界付近はゆらゆらさせる
-        float shimmer = 1.0;
-        if (abs(ny - dissolveY) < 0.15) {
-            shimmer = noise(x1 * 0.03 + gTime * 2, y1 * 0.03) * 2.0;
-        }
+    // 側面（ドーム膜）
+    int sideSegs = 40;
+    int heightSegs = 20;
+    for (int h = 0; h < heightSegs; h++) {
+        float t0 = (float)h / heightSegs;
+        float t1 = (float)(h + 1) / heightSegs;
 
-        float segAlpha = (1.0 - hemisphereDissolve) * 180 * a * shimmer;
-        // ハイライト（上部ほど明るく）
-        float bright = map(y1, -rh, rh, 1.5, 0.6);
-        stroke(68 * bright, 200 * bright, 255 * bright,
-               constrain(segAlpha, 0, 255));
-        strokeWeight(1.8);
-        line(x1, y1, x2, y2);
-    }
+        // dissolveで上から消えていく
+        if (t0 < hemisphereDissolve)
+            continue;
 
-    // 底辺の楕円（地面との接触線）
-    float bottomAlpha = (1.0 - hemisphereDissolve) * 160 * a;
-    stroke(68, 200, 255, bottomAlpha);
-    strokeWeight(2);
-    noFill();
-    ellipse(0, 0, rw * 2, 20);
+        float ry0 = -rhMax * sin((1.0 - t0) * HALF_PI) * 1.2;
+        float ry1 = -rhMax * sin((1.0 - t1) * HALF_PI) * 1.2;
+        float rw0 = rwMax * t0;
+        float rh0 = rhMax * t0;
+        float rw1 = rwMax * t1;
+        float rh1 = rhMax * t1;
 
-    // 溶解中のパーティクル（境界付近に光点）
-    if (hemisphereDissolve > 0.05 && hemisphereDissolve < 0.95) {
-        for (int p = 0; p < 12; p++) {
-            float px = random(-rw, rw);
-            float pny = dissolveY + random(-0.12, 0.12);
-            float py = map(pny, -1, 1, -rh, rh);
-            // 半球内かチェック
-            if (pow(px / rw, 2) + pow(py / rh, 2) > 1.0)
-                continue;
+        for (int i = 0; i < sideSegs; i++) {
+            float angle1 = TWO_PI / sideSegs * i;
+            float angle2 = TWO_PI / sideSegs * (i + 1);
 
-            float ps = random(2, 5);
             noStroke();
-            fill(100, 220, 255, random(100, 200) * a);
-            ellipse(px, py, ps, ps);
+            fill(68, 170, 255, 100 * a * (1.0 - hemisphereDissolve));
+            beginShape();
+            vertex(cos(angle1) * rw0, sin(angle1) * rh0 + ry0);
+            vertex(cos(angle2) * rw0, sin(angle2) * rh0 + ry0);
+            vertex(cos(angle2) * rw1, sin(angle2) * rh1 + ry1);
+            vertex(cos(angle1) * rw1, sin(angle1) * rh1 + ry1);
+            endShape(CLOSE);
         }
     }
+
+    // 底辺の楕円
+    ellipse(0, botY, botRw * 2, botRh * 2);
+
+    // ─── 膜（上から下に降りてくる） ─────────────────────────
+    float membraneT = hemisphereDissolve; // 0=頂上 / 1=地面
+    float membraneY = -rhMax * sin((1.0 - membraneT) * HALF_PI) * 1.2;
+    float membraneRw = rwMax * membraneT;
+    float membraneRh = rhMax * membraneT;
+
+    // 膜本体（半透明塗り）
+    noStroke();
+    fill(68, 170, 255, 30 * a);
+    ellipse(0, membraneY, membraneRw * 2, membraneRh * 2);
+
+    // 膜の縁（少し明るく）
+    noFill();
+    stroke(100, 220, 255, 120 * a);
+    strokeWeight(2.5);
+    beginShape();
+    for (int i = 0; i <= 60; i++) {
+        float angle = TWO_PI / 60 * i;
+        float wave = (noise(cos(angle) + gTime, sin(angle) + gTime) * 32 - 18) *
+                     (1.0 - membraneT);
+        float mx = cos(angle) * (membraneRw + wave);
+        float my = sin(angle) * (membraneRh + wave * 0.5) + membraneY;
+        vertex(mx, my);
+    }
+    endShape(CLOSE);
 
     // ラベル
     if (hemisphereDissolve < 0.7) {
@@ -203,16 +217,16 @@ void drawHemisphere(float a) {
         textSize(FONT_XS);
         textAlign(CENTER, CENTER);
         fill(68, 200, 255, (1.0 - hemisphereDissolve) * 180 * a);
-        text("CAMOUFLAGE MIRROR", 0, -rh - 16);
+        text("CAMOUFLAGE MIRROR", 0, -rhMax - 16);
         textSize(9);
         fill(68, 200, 255, (1.0 - hemisphereDissolve) * 120 * a);
-        text("ACTIVE", 0, -rh - 4);
+        text("ACTIVE", 0, -rhMax - 4);
     } else {
         textFont(fontOrbitronSm);
         textSize(FONT_XS);
         textAlign(CENTER, CENTER);
         fill(255, 80, 80, (hemisphereDissolve - 0.7) * 3 * 180 * a);
-        text("CAMOUFLAGE: DISENGAGED", 0, -rh - 16);
+        text("CAMOUFLAGE: DISENGAGED", 0, -rhMax - 16);
     }
 
     popStyle();
