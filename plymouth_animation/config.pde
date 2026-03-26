@@ -62,10 +62,10 @@ float phaseStartTime = 0; // 現フェーズ開始時刻(秒)
 // フェーズ切り替えタイミング(秒)
 final float T_PHASE0 = 0.0;
 final float T_PHASE1 = 3.0;
-final float T_PHASE2 = 7.0;
-final float T_PHASE3 = 10.0;
-final float T_PHASE4 = 12.0; // ブラックアウト後
-final float T_END = 14.5;    // 全終了
+final float T_PHASE2 = 8.0;
+final float T_PHASE3 = 15.5;
+final float T_PHASE4 = 18.0; // ブラックアウト後
+final float T_END = 20.5;    // 全終了
 
 // ------------------------------------------------------------
 // グローバルタイマー
