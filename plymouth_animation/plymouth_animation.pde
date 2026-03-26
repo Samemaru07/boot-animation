@@ -9,7 +9,7 @@
 // デバッグ中に固定するフェーズ（0〜4）
 // フェーズを固定したい場合は DEBUG_FIX_PHASE = true にする
 // 0〜4 キーでも実行中に切り替え可能
-boolean DEBUG_FIX_PHASE = true;
+boolean DEBUG_FIX_PHASE = false;
 int DEBUG_FIXED_PHASE = 0; // ← ここを変えてフェーズ切り替え
 
 void keyPressed() {
@@ -104,6 +104,7 @@ void draw() {
 // マウス座標・中心からのオフセット・現フェーズを表示
 void drawDebugOverlay() {
     pushStyle();
+    text("WSP1:" + nf(welleShieldProgress1, 1, 3), 14, 40);
 
     // 十字カーソル
     stroke(255, 255, 0, 200);

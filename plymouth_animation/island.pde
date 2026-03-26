@@ -5,10 +5,14 @@
 
 float islandAlpha = 0;
 float hemisphereDissolve = 0; // 0=完全シールド / 1=完全溶解
+float hemisphereLingerAlpha = 1.0;
 
 void initIsland() {
     islandAlpha = 0;
     hemisphereDissolve = 0;
+    welleShieldProgress1 = 0;
+    welleShieldProgress2 = 0;
+    hemisphereLingerAlpha = 1.0;
 }
 
 void drawIsland() {
@@ -21,12 +25,17 @@ void drawIsland() {
         targetAlpha = 220;
     } else if (ePhase == 2) {
         targetAlpha = 200;
+    } else if (ePhase == 3) {
+        targetAlpha = 200;
     } else {
         targetAlpha = lerp(200, 0, phaseProgress(0.8));
     }
     islandAlpha += (targetAlpha - islandAlpha) * 0.06;
 
     // 偽装解除進行（Phase 1の後半から溶ける）
+    if (hemisphereDissolve >= 1.0) {
+        hemisphereLingerAlpha = max(hemisphereLingerAlpha - 0.02, 0.0);
+    }
     if (ePhase == 1) {
         float p = phaseProgress(4.0); // 4秒かけて
         float dissolveTarget = p > 0.3 ? map(p, 0.3, 1.0, 0, 1.0) : 0;
@@ -41,13 +50,39 @@ void drawIsland() {
     pushStyle();
     translate(cx, cy + 60); // 中央より少し下に配置
 
+    // 島の出現スケールアニメ
+    float islandScale = 1.0;
+    if (ePhase == 1) {
+        float appearP = constrain(phaseProgress(1.0), 0, 1);
+        islandScale = easeOut(appearP);
+    }
+    scale(islandScale);
+
     // ─── 島の線画 ────────────────────────────────────────────
     drawIslandShape(a);
 
     // ─── 半球シールド ────────────────────────────────────────
-    if (hemisphereDissolve < 1.0) {
+    if (hemisphereDissolve < 1.0 || hemisphereLingerAlpha > 0) {
         float hemisphereA = (ePhase == 1) ? 1.0 : a;
         drawHemisphere(hemisphereA);
+    }
+
+    // ヴェルシールド形成
+    if (ePhase >= 2) {
+        if (ePhase == 2) {
+            float p2 = phaseProgress(5.5);
+            if (p2 > 4.5 / 5.5) {
+                welleShieldProgress1 = min(welleShieldProgress1 + 0.005, 1.0);
+                welleShieldProgress2 = min(welleShieldProgress2 + 0.005,
+                                           max(0, welleShieldProgress1 - 0.15));
+            }
+        }
+        float demoA = a;
+        if (ePhase == 3) {
+            demoA *= (1.0 - phaseProgress(0.5));
+        }
+        drawWelleShieldDome(demoA, welleShieldProgress1, 180);
+        drawWelleShieldDome(demoA, welleShieldProgress2, 220);
     }
 
     popStyle();
@@ -172,7 +207,8 @@ void drawHemisphere(float a) {
             float angle2 = TWO_PI / sideSegs * (i + 1);
 
             noStroke();
-            fill(68, 170, 255, 100 * a * (1.0 - hemisphereDissolve));
+            float fadeA = hemisphereDissolve >= 1.0 ? 0.0 : 1.0;
+            fill(68, 160, 255, 100 * a * fadeA);
             beginShape();
             vertex(cos(angle1) * rw0, sin(angle1) * rh0 + ry0);
             vertex(cos(angle2) * rw0, sin(angle2) * rh0 + ry0);
@@ -182,23 +218,15 @@ void drawHemisphere(float a) {
         }
     }
 
-    // 底辺の楕円
-    ellipse(0, botY, botRw * 2, botRh * 2);
-
     // ─── 膜（上から下に降りてくる） ─────────────────────────
     float membraneT = hemisphereDissolve; // 0=頂上 / 1=地面
     float membraneY = -rhMax * sin((1.0 - membraneT) * HALF_PI) * 1.2;
     float membraneRw = rwMax * membraneT;
     float membraneRh = rhMax * membraneT;
 
-    // 膜本体（半透明塗り）
-    noStroke();
-    fill(68, 170, 255, 30 * a);
-    ellipse(0, membraneY, membraneRw * 2, membraneRh * 2);
-
     // 膜の縁（少し明るく）
     noFill();
-    stroke(100, 220, 255, 120 * a);
+    stroke(100, 220, 255, 120 * a * hemisphereLingerAlpha);
     strokeWeight(2.5);
     beginShape();
     for (int i = 0; i <= 60; i++) {
@@ -227,6 +255,77 @@ void drawHemisphere(float a) {
         textAlign(CENTER, CENTER);
         fill(255, 80, 80, (hemisphereDissolve - 0.7) * 3 * 180 * a);
         text("CAMOUFLAGE: DISENGAGED", 0, -rhMax - 16);
+    }
+
+    popStyle();
+}
+
+// ヴェルシールド展開（偽装鏡面の逆再生）
+float welleShieldProgress1 = 0;
+float welleShieldProgress2 = 0;
+
+void drawWelleShieldDome(float a, float progress, float rwMax) {
+    float dissolve = 1.0 - progress;
+
+    pushStyle();
+    noFill();
+
+    float rhMax = rwMax * 0.44;
+    float topY = -rhMax * 1.2;
+    float botY = 0;
+
+    int sideSegs = 40;
+    int heightSegs = 20;
+    for (int h = 0; h < heightSegs; h++) {
+        float t0 = (float)h / heightSegs;
+        float t1 = (float)(h + 1) / heightSegs;
+
+        if (t0 < dissolve)
+            continue;
+
+        float ry0 = -rhMax * sin((1.0 - t0) * HALF_PI) * 1.2;
+        float ry1 = -rhMax * sin((1.0 - t1) * HALF_PI) * 1.2;
+        float rw0 = rwMax * t0;
+        float rh0 = rhMax * t0;
+        float rw1 = rwMax * t1;
+        float rh1 = rhMax * t1;
+
+        for (int i = 0; i < sideSegs; i++) {
+            float angle1 = TWO_PI / sideSegs * i;
+            float angle2 = TWO_PI / sideSegs * (i + 1);
+
+            noStroke();
+            fill(255, 30, 30, 180 * a * progress);
+            beginShape();
+            vertex(cos(angle1) * rw0, sin(angle1) * rh0 + ry0);
+            vertex(cos(angle2) * rw0, sin(angle2) * rh0 + ry0);
+            vertex(cos(angle2) * rw1, sin(angle2) * rh1 + ry1);
+            vertex(cos(angle1) * rw1, sin(angle1) * rh1 + ry1);
+            endShape(CLOSE);
+        }
+    }
+
+    // 膜リング（下から上へ）
+    float membraneT = dissolve;
+    float membraneY = -rhMax * sin((1.0 - membraneT) * HALF_PI) * 1.2;
+    float membraneRw = rwMax * membraneT;
+    float membraneRh = rhMax * membraneT;
+
+    if (progress > 0) {
+        noFill();
+        stroke(220, 20, 20, 120 * a * progress);
+        strokeWeight(2.5);
+        beginShape();
+        for (int i = 0; i <= 60; i++) {
+            float angle = TWO_PI / 60 * i;
+            float wave =
+                (noise(cos(angle) + gTime, sin(angle) + gTime) * 32 - 18) *
+                progress * (1.0 - progress) * 4;
+            float mx = cos(angle) * (membraneRw + wave);
+            float my = sin(angle) * (membraneRh + wave * 0.5) + membraneY;
+            vertex(mx, my);
+        }
+        endShape(CLOSE);
     }
 
     popStyle();
