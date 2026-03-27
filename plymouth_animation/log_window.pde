@@ -16,6 +16,7 @@ class LogWindow {
     float disappearTime = 99999; // 消滅タイミング(gTime基準)
     float openProgress = 0;      // 展開度合い (0.0 〜 1.0)
     boolean active = false;
+    boolean waffeladenMode = false;
 
     color borderColor;
     boolean redBlink = false; // エラー用赤点滅
@@ -35,7 +36,7 @@ class LogWindow {
         this.appearTime = appearTime;
         this.borderColor = borderColor;
         this.scrollInterval = scrollInterval;
-        this.maxLines = floor((h - 48) / 18);
+        this.maxLines = floor((h - 28) / 18);
     }
 
     void update() {
@@ -45,8 +46,14 @@ class LogWindow {
         active = true;
 
         // ★変更：展開にかかる時間（秒）。数値を大きくするとよりゆっくり開きます。
-        float animDuration = 0.3;
-        float animSpeed = 1.0 / (TARGET_FPS * animDuration);
+        float openDuration = 0.3;
+        float closeDuration = 0.5;
+        float animSpeed;
+        if (gTime >= disappearTime) {
+            animSpeed = 1.0 / (TARGET_FPS * closeDuration);
+        } else {
+            animSpeed = 1.0 / (TARGET_FPS * openDuration);
+        }
 
         if (gTime >= disappearTime) {
             openProgress = max(openProgress - animSpeed, 0);
@@ -144,8 +151,25 @@ class LogWindow {
         // ログ行
         textSize(FONT_XS);
         for (int i = 0; i < lines.length; i++) {
-            float ly = y + 36 + i * 18;
+            float ly = waffeladenMode ? y + h * 0.25 + i * 18 : y + 36 + i * 18;
+
+            // ─── WAFFELADEN STANDBY ───
+            if (lines[i].equals(">> WAFFELADEN STANDBY")) {
+                float blink = (sin(gTime * TWO_PI * 1.5) + 1) * 0.5;
+                float alpha = lerp(160, 255, blink);
+                textFont(fontOrbitron);
+                textSize(FONT_LG);
+                textAlign(CENTER, CENTER);
+                fill(red(COL_RED), green(COL_RED), blue(COL_RED), alpha);
+                text("WAFFELADEN STANDBY", x + w / 2,
+                     y + titleHeight + FONT_LG);
+                textFont(fontOrbitronSm);
+                textSize(FONT_XS);
+                textAlign(LEFT, CENTER);
+                continue;
+            }
             // WARNING / ERROR 行は色を変える
+            textSize(waffeladenMode ? 13 : FONT_XS);
             if (lines[i].startsWith("!! ") || lines[i].startsWith("ERR")) {
                 fill(red(COL_RED), green(COL_RED), blue(COL_RED), 220);
             } else if (lines[i].startsWith(">> ") ||
@@ -157,7 +181,10 @@ class LogWindow {
             } else {
                 fill(red(COL_BLUE), green(COL_BLUE), blue(COL_BLUE), 190);
             }
-            text(lines[i], x + lineMarginX, ly);
+            float textX = (lines[i].equals(">> WAFFELADEN STANDBY"))
+                              ? x + w / 2
+                              : x + w / 4;
+            text(lines[i], textX, ly);
         }
 
         // カーソル点滅（最終行の後）
@@ -191,7 +218,7 @@ LogWindow[] logWindows;
 LogWindow auxWindow;
 
 void initLogWindows() {
-    logWindows = new LogWindow[10];
+    logWindows = new LogWindow[11];
 
     // ─── Phase 0：SOLOMON 敵情報 ───────────────
     // W1
@@ -243,8 +270,16 @@ void initLogWindows() {
                       brunhildeErrorLines(), T_PHASE3 + 0.2, COL_RED, 0.15);
     logWindows[9].redBlink = true;
 
+    // ─── Phase 0 後半：WAFFELADEN STANDBY 大型表示 ──────────────
+    logWindows[10] = new LogWindow(WIN_W / 2 - 250, WIN_H / 2 - 500, 490, 300,
+                                   "COMBAT ALERT", waffeladenLines(),
+                                   T_PHASE0 + 2.4, COL_RED, 0.08);
+    logWindows[10].redBlink = true;
+    logWindows[10].disappearTime = T_PHASE1 + 2.0;
+    logWindows[10].waffeladenMode = true;
+
     // ─── Phase 4：AUX POWERウィンドウ（暗転後） ──────────────────────────
-    auxWindow = new LogWindow(WIN_W / 2 - 280, WIN_H / 2 - 80, 560, 180,
+    auxWindow = new LogWindow(WIN_W / 2 - 220, WIN_H / 2 - 80, 460, 160,
                               "BRUNHILDE SYSTEM", auxLines(), T_PHASE4 + 0.5,
                               COL_GREEN, 0.25);
 }
@@ -377,7 +412,19 @@ String[] brunhildeErrorLines() {
 // AUX POWERウィンドウ
 String[] auxLines() {
     return new String[]{"-- SYSTEM DARK --",     "AUX POWER: ONLINE",
-                        "SUPPLY: MARK-X ALLES",  "ASSIMILATION ENERGY",
+                        "SUPPLY: MARK ALLES",    "ASSIMILATION ENERGY",
                         ">> BUS VOLTAGE: 12.1V", "BRUNHILDE: REBOOT...",
                         "TRANSFERRING TO AUX..."};
+}
+
+String[] waffeladenLines() {
+    return new String[]{">> WAFFELADEN STANDBY",
+                        "!! TYPE-1 ALERT CONFIRMED",
+                        "!! FESTUM INCURSION: PHENEX SECTOR",
+                        "",
+                        "-- COMBAT DIRECTIVE --",
+                        ">> MARK ALLES: LAUNCH CLEARANCE PENDING",
+                        "PILOT: KAZUKI MAKABE",
+                        "GATE: NACHTHERE-03",
+                        "!! AWAITING AUTHORISATION"};
 }
