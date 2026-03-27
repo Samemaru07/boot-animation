@@ -288,19 +288,19 @@ void drawHemisphere(float a) {
     // ラベル
     if (hemisphereDissolve < 0.7) {
         textFont(fontOrbitronSm);
-        textSize(FONT_XS);
+        textSize(15);
         textAlign(CENTER, CENTER);
         fill(68, 200, 255, (1.0 - hemisphereDissolve) * 180 * a);
-        text("CAMOUFLAGE MIRROR", 0, -rhMax - 16);
-        textSize(9);
+        text("CAMOUFLAGE MIRROR", 0, -rhMax - 40);
+        textSize(15);
         fill(68, 200, 255, (1.0 - hemisphereDissolve) * 120 * a);
-        text("ACTIVE", 0, -rhMax - 4);
+        text("ACTIVE", 0, -rhMax - 16);
     } else {
         textFont(fontOrbitronSm);
-        textSize(FONT_XS);
+        textSize(15);
         textAlign(CENTER, CENTER);
         fill(255, 80, 80, (hemisphereDissolve - 0.7) * 3 * 180 * a);
-        text("CAMOUFLAGE: DISENGAGED", 0, -rhMax - 16);
+        text("CAMOUFLAGE: DISENGAGED", 0, -rhMax - 40);
     }
 
     popStyle();
