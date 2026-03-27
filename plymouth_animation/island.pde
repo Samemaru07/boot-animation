@@ -182,41 +182,31 @@ void drawIslandShape(float a) {
     stroke(68, 200, 255, 120 * a);
     strokeWeight(1.5);
     // 山頂
-    line(-20, -35, 0, -70);
-    line(0, -70, 25, -40);
+    line(-20, -35, 0, -60);
+    line(0, -60, 25, -40);
     // 小山
-    line(50, -5, 65, -30);
-    line(65, -30, 80, -7);
+    line(70, -5, 77, -20);
+    line(77, -20, 85, -7);
     // 海岸線
-    line(-80, 5, -50, -5);
-    line(-50, -5, -20, 5);
-    // グリッド（人工物感）
-    stroke(68, 170, 255, 60 * a);
-    strokeWeight(1);
-    for (int i = -3; i <= 3; i++) {
-        line(i * 30, -40, i * 30, 50);
-        line(-110, i * 18, 110, i * 18);
-    }
+    line(-85, 5, -75, -5);
+    line(-75, -5, -65, 5);
 
     // 拠点マーク（中央付近）
     noFill();
     stroke(255, 170, 50, 180 * a);
-    strokeWeight(2);
-    ellipse(0, 0, 22, 22);
-    ellipse(0, 0, 8, 8);
-    // クロスヘア
-    line(-14, 0, 14, 0);
-    line(0, -14, 0, 14);
+    strokeWeight(7);
+    ellipse(0, -50, 22, -12);
+    ellipse(0, -50, 8, 8);
 
     // ラベル
     textFont(fontOrbitronSm);
-    textSize(FONT_XS);
+    textSize(20);
     textAlign(CENTER, CENTER);
     fill(255, 170, 50, 200 * a);
-    text("PHENEX ISLAND", 0, 75);
-    textSize(9);
+    text("TATSUMIYA Island", 0, 105);
+    textSize(14);
     fill(68, 170, 255, 150 * a);
-    text("28.7°N  132.4°E", 0, 90);
+    text("28.7°N  132.4°E", 0, 130);
     popStyle();
 }
 
