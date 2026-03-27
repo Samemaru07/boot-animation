@@ -67,7 +67,7 @@ void drawIsland() {
         drawHemisphere(hemisphereA);
     }
 
-    // ヴェルシールド形成
+    // ヴェルシールド展開
     if (ePhase >= 2) {
         if (ePhase == 2) {
             float p2 = phaseProgress(5.5);
@@ -85,6 +85,15 @@ void drawIsland() {
         drawWelleShieldDome(demoA, welleShieldProgress2, 220);
     }
 
+    if (DEBUG_MODE) {
+        float relX = (mouseX - cx) / islandScale;
+        float relY = (mouseY - (cy + 60)) / islandScale;
+        fill(255);
+        textSize(12);
+        textAlign(LEFT, BOTTOM);
+        text(int(relX) + ", " + int(relY), relX, relY - 10);
+    }
+
     popStyle();
     popMatrix();
 }
@@ -99,40 +108,88 @@ void drawIslandShape(float a) {
     // 島の輪郭（手描き風の不規則な楕円＋岬）
     // 原点＝島中央
     beginShape();
-    // 時計回りに頂点を並べる
-    curveVertex(-120, 10);
-    curveVertex(-110, -5);
-    curveVertex(-80, -20);
-    curveVertex(-60, -35);
-    curveVertex(-30, -45);
-    curveVertex(0, -50);
-    curveVertex(35, -42);
-    curveVertex(70, -28);
-    curveVertex(95, -12);
-    curveVertex(115, 5);
-    curveVertex(110, 22);
-    curveVertex(90, 38);
-    curveVertex(55, 50);
-    curveVertex(10, 55);
-    curveVertex(-35, 50);
-    curveVertex(-80, 35);
-    curveVertex(-115, 22);
-    curveVertex(-120, 10);
-    curveVertex(-110, -5);
+    curveVertex(-120, 65);
+    curveVertex(-100, 25);
+    curveVertex(-80, -25);
+    curveVertex(-30, -55);
+    curveVertex(20, -65);
+    curveVertex(70, -45);
+    curveVertex(90, 5);
+    curveVertex(50, -15);
+    curveVertex(20, -30);
+    curveVertex(-10, -35);
+    curveVertex(-40, -25);
+    curveVertex(-60, 5);
+    curveVertex(-100, 25);
+    curveVertex(-80, -25);
     endShape();
+
+    // 左下の離島
+    pushMatrix();
+    translate(-140, 35);
+    scale(0.5);
+    beginShape();
+    vertex(60, 20);
+    vertex(43, 30);
+    vertex(45, 35);
+    vertex(52, 45);
+    vertex(65, 30);
+    endShape(CLOSE);
+    popMatrix();
+
+    // 下の離島 (既存の修正)
+    pushMatrix();
+    translate(80, 55); // 30px右にずらした (-10 -> 20)
+    scale(0.6);        // サイズを半分にした (0.8 -> 0.4)
+    // ellipse(0, 0, 40, 40); // きれいな丸は削除
+    //  汚い丸に変更 (不規則な10点で構成)
+    beginShape();
+    vertex(21, -1);
+    vertex(15, 10);
+    vertex(7, 12);
+    vertex(-5, 12);
+    vertex(-17, 7);
+    vertex(-19, 1);
+    vertex(-15, -13);
+    vertex(-7, -18);
+    vertex(5, -20);
+    vertex(17, -11);
+    endShape(CLOSE);
+    popMatrix();
+
+    // 右下の離島群
+    pushMatrix();
+    translate(90, 25);
+    scale(0.5);
+    beginShape();
+    vertex(-2, -2);
+    vertex(2, 2);
+    vertex(0, 0);
+    endShape(CLOSE);
+    beginShape();
+    vertex(12, 3);
+    vertex(18, 10);
+    vertex(10, 8);
+    endShape(CLOSE);
+    beginShape();
+    vertex(25, 15);
+    vertex(30, 22);
+    vertex(22, 18);
+    endShape(CLOSE);
+    popMatrix();
 
     // 島内部の山・地形ライン
     stroke(68, 200, 255, 120 * a);
     strokeWeight(1.5);
     // 山頂
-    line(-20, -20, 0, -55);
-    line(0, -55, 25, -25);
+    line(-20, -35, 0, -70);
+    line(0, -70, 25, -40);
     // 小山
-    line(50, 10, 65, -15);
-    line(65, -15, 80, 8);
+    line(50, -5, 65, -30);
+    line(65, -30, 80, -7);
     // 海岸線
-    line(-80, 20, -50, 10);
-    line(-50, 10, -20, 20);
+    line(-80, 5, -50, -5);
+    line(-50, -5, -20, 5);
     // グリッド（人工物感）
     stroke(68, 170, 255, 60 * a);
     strokeWeight(1);
@@ -160,7 +217,6 @@ void drawIslandShape(float a) {
     textSize(9);
     fill(68, 170, 255, 150 * a);
     text("28.7°N  132.4°E", 0, 90);
-
     popStyle();
 }
 
