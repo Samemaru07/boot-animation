@@ -377,7 +377,7 @@ String[] brunhildeErrorLines() {
 // AUX POWERウィンドウ
 String[] auxLines() {
     return new String[]{"-- SYSTEM DARK --",     "AUX POWER: ONLINE",
-                        "SUPPLY: MARK-X ALLES",  "ASSIMILATION ENERGY",
+                        "SUPPLY: MARK ALLES",    "ASSIMILATION ENERGY",
                         ">> BUS VOLTAGE: 12.1V", "BRUNHILDE: REBOOT...",
                         "TRANSFERRING TO AUX..."};
 }
