@@ -92,78 +92,10 @@ void draw() {
     // ─── フレーム書き出し ───
     if (EXPORT_FRAMES) {
         saveFrame("frames/frame-####.png");
+        if (frameCount >= T_END * TARGET_FPS) {
+            noLoop();
+        }
     }
-
-    // ─── デバッグオーバーレイ ───
-    if (DEBUG_MODE) {
-        drawDebugOverlay();
-    }
-}
-
-// ─── デバッグオーバーレイ ────────────────────────────────────
-// マウス座標・中心からのオフセット・現フェーズを表示
-void drawDebugOverlay() {
-    pushStyle();
-    text("WSP1:" + nf(welleShieldProgress1, 1, 3), 14, 40);
-
-    // 十字カーソル
-    stroke(255, 255, 0, 200);
-    strokeWeight(1);
-    line(mouseX - 16, mouseY, mouseX + 16, mouseY);
-    line(mouseX, mouseY - 16, mouseX, mouseY + 16);
-    ellipse(mouseX, mouseY, 6, 6);
-
-    // 座標ラベル（マウスの右下に追従）
-    float cx = WIN_W / 2.0;
-    float cy = WIN_H / 2.0;
-    int offX = mouseX - int(cx);
-    int offY = mouseY - int(cy);
-
-    String coordAbs = "ABS  x:" + mouseX + "  y:" + mouseY;
-    String coordOffset = "OFF  x:" + (offX >= 0 ? "+" : "") + offX +
-                         "  y:" + (offY >= 0 ? "+" : "") + offY;
-    String phaseInfo = "PHASE:" + ePhase + "  t:" + nf(gTime, 1, 2);
-
-    // ラベル背景
-    int lx = mouseX + 14;
-    int ly = mouseY + 6;
-    // 画面右端をはみ出さないよう補正
-    if (lx + 220 > WIN_W)
-        lx = mouseX - 234;
-    if (ly + 58 > WIN_H)
-        ly = mouseY - 62;
-
-    noStroke();
-    fill(0, 0, 0, 180);
-    rect(lx - 4, ly - 14, 228, 60, 3);
-
-    textFont(fontOrbitronSm);
-    textSize(11);
-    textAlign(LEFT, TOP);
-    fill(255, 255, 0, 230);
-    text(coordAbs, lx, ly);
-    text(coordOffset, lx, ly + 18);
-    fill(68, 200, 255, 200);
-    text(phaseInfo, lx, ly + 36);
-
-    // 画面中心マーク
-    stroke(255, 255, 0, 80);
-    strokeWeight(1);
-    line(cx - 20, cy, cx + 20, cy);
-    line(cx, cy - 20, cx, cy + 20);
-
-    // 左上にヒント
-    noStroke();
-    fill(0, 0, 0, 160);
-    rect(8, 8, 310, 28, 3);
-    textSize(10);
-    fill(255, 255, 0, 200);
-    textAlign(LEFT, CENTER);
-    text("D:表示切替  F:固定切替  0〜4:フェーズ  中心:" + int(cx) + "," +
-             int(cy),
-         14, 22);
-
-    popStyle();
 }
 
 // ─── レーダー背景 ───────────────────────────────────────────
