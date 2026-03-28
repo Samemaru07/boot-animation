@@ -65,7 +65,7 @@ final float T_PHASE1 = 3.0;
 final float T_PHASE2 = 8.0;
 final float T_PHASE3 = 15.5;
 final float T_PHASE4 = 18.0; // ブラックアウト後
-final float T_END = 20.5;    // 全終了
+final float T_END = 22.0;    // 全終了
 
 // ------------------------------------------------------------
 // グローバルタイマー
@@ -81,7 +81,7 @@ float auxPanelAlpha = 0; // AUXウィンドウ用
 // ------------------------------------------------------------
 // セーブフレーム（書き出し時のみ true にする）
 // ------------------------------------------------------------
-final boolean EXPORT_FRAMES = false;
+final boolean EXPORT_FRAMES = true;
 int exportFrame = 0;
 
-boolean DEBUG_MODE = true; // D キーで実行中にも切替可能
+boolean DEBUG_MODE = false; // D キーで実行中にも切替可能
