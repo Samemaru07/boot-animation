@@ -1,0 +1,17 @@
+[Unit]
+Description=Fafner Boot Animation
+DefaultDependencies=no
+After=systemd-vconsole-setup.service systemd-udev-settle.service multi-user.target
+Before=display-manager.service
+
+[Service]
+Type=oneshot
+SupplementaryGroups=video
+ExecStartPre=/bin/sh -c 'until [ -e /dev/dri/card1 ]; do sleep 0.1; done'
+ExecStart=/usr/bin/mpv --vo=drm --drm-connector=DP-2 --fullscreen --no-audio --really-quiet /usr/local/share/fafner/boot_padded.mp4
+StandardInput=tty
+TTYPath=/dev/tty1
+TTYReset=yes
+
+[Install]
+WantedBy=graphical.target
