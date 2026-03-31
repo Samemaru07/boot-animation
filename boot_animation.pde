@@ -138,9 +138,6 @@ void draw() {
         fill(100, 220, 100, finalTextAlpha);
         textSize(36);
         text("BRUNHILDE SYSTEM :: ONLINE", width / 2, height / 2 - 20);
-        fill(68, 170, 255, finalTextAlpha * 0.7);
-        textSize(14);
-        text("WELCOME, PILOT MAKABE", width / 2, height / 2 + 24);
     }
 
     // フェーズ5：暗転
