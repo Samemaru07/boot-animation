@@ -59,6 +59,12 @@ float[] eVals = {0.0, 0.0, 0.0}; // 0スタート
 int ePhase = 0;           // 現在充電中のバー（0=SYNC, 1=REACTOR, 2=THRUST）
 boolean eStarted = false; // アニメーション開始フラグ
 
+// --- 接続線アニメーション ---
+float pipeDrawT = 0.0;
+boolean pipeAnimDone = false;
+float[] pulsePositions = {0.0, 0.33, 0.66}; // 粒の位置（0.0〜1.0）
+boolean pulseActive = false;
+
 // --- 色定数（initColors()で初期化） ---
 int COL_PANEL_BG, COL_BORDER, COL_TITLE, COL_DIM;
 int COL_MAIN, COL_OK, COL_ERR, COL_WARN, COL_CMD, COL_ACCENT;
