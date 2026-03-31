@@ -3,6 +3,10 @@
 // ============================================================
 
 void keyPressed() {
+    if (key == ESC) {
+        key = 0;
+        return;
+    }
     if (phase == 3 && pwVisible && !authDone && !timedOut) {
         if (key == ENTER || key == RETURN) {
             authDone = true;
