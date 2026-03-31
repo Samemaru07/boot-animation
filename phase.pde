@@ -17,7 +17,7 @@ void updatePhase() {
         msOpacity = min(msOpacity + 0.02, 1.0);
         funnelActive = true;
         if (now - phaseTimer > 1400 && pcHostname.equals("---")) {
-          compStatus[0] = "SCANNING";
+            compStatus[0] = "SCANNING";
             compColors[0] = COL_MAIN;
             compStatus[1] = "RESTRICTED";
             compColors[1] = COL_WARN;
@@ -131,6 +131,7 @@ void updatePhase() {
             if (pipeDrawT >= 1.0) {
                 pipeAnimDone = true;
                 pulseActive = true;
+                eStarted = true;
             }
         }
         if (pulseActive) {
