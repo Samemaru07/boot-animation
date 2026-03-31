@@ -108,6 +108,22 @@ void updatePhase() {
                 ePhase++;
             }
         }
+
+        // 接続線アニメーション
+        if (!pipeAnimDone) {
+            pipeDrawT = min(pipeDrawT + 0.33, 1.0);
+            if (pipeDrawT >= 1.0) {
+                pipeAnimDone = true;
+                pulseActive = true;
+            }
+        }
+        if (pulseActive) {
+            for (int i = 0; i < pulsePositions.length; i++) {
+                pulsePositions[i] += 0.012;
+                if (pulsePositions[i] > 1.0)
+                    pulsePositions[i] -= 1.0;
+            }
+        }
     }
 }
 

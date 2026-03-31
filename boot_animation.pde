@@ -45,10 +45,76 @@ void draw() {
     float pcLeftY = msCY + (-45) * 1.5;
 
     // 接続線（エネルギーパイプ）
-    int pipeCol = (ePhase >= 3) ? color(100, 220, 100) : color(255, 100, 0);
-    stroke(pipeCol);
-    strokeWeight(8);
-    line(coreX, coreY, pcLeftX, pcLeftY);
+    if (pipeDrawT > 0) {
+        int pipeCol =
+            (ePhase >= 3) ? color(100, 220, 100) : color(255, 170, 50);
+        float lineEndX = lerp(coreX, pcLeftX, pipeDrawT);
+        float[] pipeOffsets = {-20, 0, 20};
+
+        for (int i = 0; i < pipeOffsets.length; i++) {
+            float offsetY = pipeOffsets[i];
+            float lineEndY =
+                lerp(coreY + offsetY, pcLeftY + offsetY, pipeDrawT);
+
+            // 線本体
+            stroke(pipeCol);
+            strokeWeight(8);
+            line(coreX, coreY + offsetY, lineEndX, lineEndY);
+
+            // 中央線のみソケット・ラベル
+            // 左ソケット（全線）
+            noStroke();
+            fill(red(pipeCol), green(pipeCol), blue(pipeCol), 80);
+            ellipse(coreX, coreY + offsetY, 22, 22);
+            fill(pipeCol);
+            ellipse(coreX, coreY + offsetY, 12, 12);
+
+            // 右ソケット（全線・伸びきったら表示）
+            if (pipeAnimDone) {
+                noStroke();
+                fill(red(pipeCol), green(pipeCol), blue(pipeCol), 80);
+                ellipse(pcLeftX, pcLeftY + offsetY, 22, 22);
+                fill(pipeCol);
+                ellipse(pcLeftX, pcLeftY + offsetY, 12, 12);
+            }
+
+            // ラベル（一番下の線の下に表示）
+            if (i == 2) {
+                fill(pipeCol);
+                textSize(11);
+                textAlign(LEFT, TOP);
+                text("ENERGY LINK", coreX, coreY + offsetY + 16);
+            }
+        }
+    }
+
+    // パルスエフェクト
+    if (pulseActive) {
+        int pipeCol =
+            (ePhase >= 3) ? color(100, 220, 100) : color(255, 170, 50);
+        float[] pipeOffsets = {-20, 0, 20};
+        for (int i = 0; i < pipeOffsets.length; i++) {
+            float offsetY = pipeOffsets[i];
+            for (int j = 0; j < pulsePositions.length; j++) {
+                float px = lerp(coreX, pcLeftX, pulsePositions[j]);
+                float py =
+                    lerp(coreY + offsetY, pcLeftY + offsetY, pulsePositions[j]);
+                noStroke();
+                fill(red(pipeCol), green(pipeCol), blue(pipeCol), 60);
+                ellipse(px, py, 24, 24);
+                fill(red(pipeCol), green(pipeCol), blue(pipeCol), 200);
+                ellipse(px, py, 10, 10);
+            }
+        }
+    }
+
+    // デバッグ表示（確認後に削除）
+    fill(255);
+    textSize(16);
+    textAlign(LEFT, TOP);
+    text("phase=" + phase + " ePhase=" + ePhase +
+             " pipeDrawT=" + nf(pipeDrawT, 1, 2),
+         10, height - 30);
 }
 
 void drawPanel(float x, float y, float w, float h) {
