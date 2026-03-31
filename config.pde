@@ -65,6 +65,15 @@ boolean pipeAnimDone = false;
 float[] pulsePositions = {0.0, 0.33, 0.66}; // 粒の位置（0.0〜1.0）
 boolean pulseActive = false;
 
+// --- フェーズ5：起動シーケンス ---
+float scanLineY = 0;
+boolean scanLineDone = false;
+float[] panelAlpha = {255, 255, 255, 255}; // 4パネル分
+int panelFadeIndex = 0;
+float finalTextAlpha = 0;
+float blackoutAlpha = 0;
+boolean phase5Started = false;
+
 // --- コンポーネントステータス ---
 String[] compNames = {"SIEGFRIED SYS",  "CDC PLATFORM", "URD AUX",
                       "SOLOMON BUFFER", "AUX POWER",    "BRUNHILDE SYS"};

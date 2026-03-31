@@ -21,10 +21,26 @@ void draw() {
     drawPanel(4, hh + 2, hw - 6, hh - 6);
     drawPanel(hw + 2, hh + 2, hw - 6, hh - 6);
 
-    drawMSPanel(4, 4, hw - 6, hh - 6);
-    drawPCPanel(hw + 2, 4, hw - 6, hh - 6);
-    drawLogPanel(4, hh + 2, hw - 6, hh - 6);
-    drawCLIPanel(hw + 2, hh + 2, hw - 6, hh - 6);
+    // フェーズ5ではパネルをアルファ付きで描画
+    if (phase < 5) {
+        drawMSPanel(4, 4, hw - 6, hh - 6);
+        drawPCPanel(hw + 2, 4, hw - 6, hh - 6);
+        drawLogPanel(4, hh + 2, hw - 6, hh - 6);
+        drawCLIPanel(hw + 2, hh + 2, hw - 6, hh - 6);
+    } else {
+        tint(255, panelAlpha[0]);
+        drawMSPanel(4, 4, hw - 6, hh - 6);
+        noTint();
+        tint(255, panelAlpha[1]);
+        drawPCPanel(hw + 2, 4, hw - 6, hh - 6);
+        noTint();
+        tint(255, panelAlpha[2]);
+        drawLogPanel(4, hh + 2, hw - 6, hh - 6);
+        noTint();
+        tint(255, panelAlpha[3]);
+        drawCLIPanel(hw + 2, hh + 2, hw - 6, hh - 6);
+        noTint();
+    }
 
     if (flickering && flickerOpacity > 0) {
         noStroke();
@@ -32,16 +48,19 @@ void draw() {
         rect(hw + 2, 4, hw - 6, hh - 6);
     }
 
-    // デバッグ：接続線の起点・終点確認
-    // hw と hh は上で宣言済みなので削除
+    // フェーズ5：スキャンライン
+    if (phase == 5 && !scanLineDone) {
+        noStroke();
+        fill(255, 255, 255, 60);
+        rect(0, scanLineY - 6, width, 6);
+        fill(255, 255, 255, 180);
+        rect(0, scanLineY - 2, width, 2);
+    }
+
     float msCX = 4 + (hw - 6) / 2;
     float msCY = 4 + (hh - 6) / 2 + 10;
-
     float coreX = 650;
     float coreY = msCY + (-45) * 1.5;
-
-    float pcCX = hw + 2 + (hw - 6) / 2;
-    float pcCY = 4 + (hh - 6) / 2;
     float pcLeftX = 1150;
     float pcLeftY = msCY + (-45) * 1.5;
 
@@ -107,6 +126,25 @@ void draw() {
                 ellipse(px, py, 10, 10);
             }
         }
+    }
+
+    // フェーズ5：中央テキスト
+    if (finalTextAlpha > 0) {
+        noStroke();
+        fill(0, finalTextAlpha * 0.85);
+        rect(0, 0, width, height);
+        textFont(createFont("Orbitron", 19));
+        textAlign(CENTER, CENTER);
+        fill(100, 220, 100, finalTextAlpha);
+        textSize(36);
+        text("BRUNHILDE SYSTEM :: ONLINE", width / 2, height / 2 - 20);
+    }
+
+    // フェーズ5：暗転
+    if (blackoutAlpha > 0) {
+        noStroke();
+        fill(0, blackoutAlpha);
+        rect(0, 0, width, height);
     }
 
     // デバッグ表示（確認後に削除）
