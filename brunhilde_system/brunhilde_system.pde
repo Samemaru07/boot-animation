@@ -1,5 +1,10 @@
+void settings() {
+    String monitorEnv = System.getenv("BRUNHILDE_MONITOR");
+    int displayIndex = (monitorEnv != null && monitorEnv.equals("2")) ? 2 : 1;
+    fullScreen(displayIndex);
+}
+
 void setup() {
-    size(1920, 1020);
     frameRate(60);
     textFont(createFont("Courier New", 12, true));
     initColors();
