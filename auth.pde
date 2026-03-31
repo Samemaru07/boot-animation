@@ -28,7 +28,6 @@ void doSuccess() {
     pcPowerCol = color(68, 255, 136);
     progColor = COL_OK;
     phase = 4;
-    eStarted = true;
 }
 
 void doFail(String reason) {

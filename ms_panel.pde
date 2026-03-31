@@ -983,7 +983,6 @@ void drawLabels(float op) {
 
     noStroke();
     String[] eLabels = {"SYNC RATE", "REACTOR", "THRUST"};
-    float[] eVals = {100.0, 100.0, 100.0};
 
     for (int i = 0; i < 3; i++) {
         float y = ey + 18 + i * eh;
