@@ -22,6 +22,7 @@ float progWidth = 0;
 int progColor;
 
 // --- 認証 ---
+String secretPassword = "";
 String pwInput = "";
 boolean pwVisible = false;
 boolean authDone = false;
