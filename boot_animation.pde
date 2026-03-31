@@ -3,6 +3,7 @@ void setup() {
     frameRate(60);
     textFont(createFont("Courier New", 12, true));
     initColors();
+    initCompStatus();
     phaseTimer = millis();
     startPhase0();
 }

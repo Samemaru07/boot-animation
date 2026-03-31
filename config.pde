@@ -65,6 +65,17 @@ boolean pipeAnimDone = false;
 float[] pulsePositions = {0.0, 0.33, 0.66}; // 粒の位置（0.0〜1.0）
 boolean pulseActive = false;
 
+// --- コンポーネントステータス ---
+String[] compNames = {"SIEGFRIED SYS",  "CDC PLATFORM", "URD AUX",
+                      "SOLOMON BUFFER", "AUX POWER",    "BRUNHILDE SYS"};
+String[] compStatus = {"---", "---", "---", "---", "---", "---"};
+int[] compColors; // initColors()で初期化
+
+void initCompStatus() {
+    compColors =
+        new int[]{COL_DIM, COL_DIM, COL_DIM, COL_DIM, COL_DIM, COL_DIM};
+}
+
 // --- 色定数（initColors()で初期化） ---
 int COL_PANEL_BG, COL_BORDER, COL_TITLE, COL_DIM;
 int COL_MAIN, COL_OK, COL_ERR, COL_WARN, COL_CMD, COL_ACCENT;

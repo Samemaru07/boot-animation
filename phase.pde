@@ -17,6 +17,10 @@ void updatePhase() {
         msOpacity = min(msOpacity + 0.02, 1.0);
         funnelActive = true;
         if (now - phaseTimer > 1400 && pcHostname.equals("---")) {
+          compStatus[0] = "SCANNING";
+            compColors[0] = COL_MAIN;
+            compStatus[1] = "RESTRICTED";
+            compColors[1] = COL_WARN;
             pcHostname = "archlinux";
             pcKernel = "6.x.x-arch1";
             pcCPU = "DETECTED";
@@ -39,6 +43,12 @@ void updatePhase() {
         }
         if (now - phaseTimer > 2200 && !uplinkDone) {
             uplinkDone = true;
+            compStatus[0] = "OK";
+            compColors[0] = COL_OK;
+            compStatus[2] = "ONLINE";
+            compColors[2] = COL_OK;
+            compStatus[3] = "STANDBY";
+            compColors[3] = COL_WARN;
             pcLink = "SECURE";
             pcLinkCol = COL_OK;
             addLog("[0004] UPLINK SECURE :: CH01", COL_OK);
@@ -56,6 +66,10 @@ void updatePhase() {
         progWidth = lerp(progWidth, routeP, 0.1);
         if (routeP >= 60 && !routeDone) {
             routeDone = true;
+            compStatus[4] = "ACTIVE";
+            compColors[4] = COL_OK;
+            compStatus[5] = "BOOTING";
+            compColors[5] = COL_MAIN;
             addLog("[0006] ROUTE CONFIRMED", COL_OK);
         }
         if (now - phaseTimer > 3500) {
@@ -86,6 +100,8 @@ void updatePhase() {
         energyBar = min(energyBar + 0.36, 36);
         if (energyBar >= 36 && !energyDone) {
             energyDone = true;
+            compStatus[5] = "ONLINE";
+            compColors[5] = COL_OK;
             addLog("[0009] TRANSFER COMPLETE", COL_OK);
             addCli("> exec boot_sequence --host", COL_CMD);
             statusText = "[ TRANSFER COMPLETE :: WELCOME, PILOT ]";
