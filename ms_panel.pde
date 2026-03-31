@@ -1070,17 +1070,18 @@ void drawVital(float op) {
 }
 
 void drawEnergyMeter() {
+    float op = (phase == 5) ? panelAlpha[0] / 255.0 : 1.0;
     noFill();
-    stroke(COL_DIM);
+    stroke(red(COL_DIM), green(COL_DIM), blue(COL_DIM), op * 255);
     strokeWeight(0.5);
     rect(-18, 130, 36, 4, 1);
     if (energyBar > 0) {
         int barCol = lerpColor(COL_MAIN, COL_OK, energyBar / 36.0);
         noStroke();
-        fill(red(barCol), green(barCol), blue(barCol), 180);
+        fill(red(barCol), green(barCol), blue(barCol), op * 180);
         rect(-18, 130, energyBar, 4, 1);
     }
-    stroke(COL_BORDER);
+    stroke(red(COL_BORDER), green(COL_BORDER), blue(COL_BORDER), op * 255);
     strokeWeight(0.3);
     for (int i = 0; i < 3; i++)
         line(-40, 136 + i * 5, 40, 136 + i * 5);

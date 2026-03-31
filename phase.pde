@@ -98,10 +98,8 @@ void updatePhase() {
         }
     } else if (phase == 4) {
         energyBar = min(energyBar + 0.36, 36);
-        if (energyBar >= 36 && !energyDone) {
+if (energyBar >= 36 && !energyDone) {
             energyDone = true;
-            compStatus[5] = "ONLINE";
-            compColors[5] = COL_OK;
             addLog("[0009] TRANSFER COMPLETE", COL_OK);
             addCli("> exec boot_sequence --host", COL_CMD);
             statusText = "[ TRANSFER COMPLETE :: WELCOME, PILOT ]";
@@ -109,6 +107,11 @@ void updatePhase() {
             progColor = COL_OK;
             pcPower = "ONLINE";
             pcPowerCol = COL_OK;
+        }
+        if (energyDone && !phase5Started && ePhase >= 3 && now - phaseTimer > 8000) {
+            phase5Started = true;
+            phase = 5;
+            phaseTimer = now;
         }
 
         // エネルギーアニメーション
@@ -139,6 +142,34 @@ void updatePhase() {
                 pulsePositions[i] += 0.012;
                 if (pulsePositions[i] > 1.0)
                     pulsePositions[i] -= 1.0;
+            }
+        }
+    } else if (phase == 5) {
+        // スキャンライン
+        if (!scanLineDone) {
+            scanLineY += 18;
+            if (scanLineY >= height) {
+                scanLineY = height;
+                scanLineDone = true;
+            }
+        }
+        // パネルフェードアウト（順番に）
+        if (scanLineDone && panelFadeIndex < 4) {
+            panelAlpha[panelFadeIndex] -= 8;
+            if (panelAlpha[panelFadeIndex] <= 0) {
+                panelAlpha[panelFadeIndex] = 0;
+                panelFadeIndex++;
+            }
+        }
+        // 中央テキスト
+        if (panelFadeIndex >= 4) {
+            finalTextAlpha = min(finalTextAlpha + 4, 255);
+        }
+        // 暗転
+        if (finalTextAlpha >= 255 && now - phaseTimer > 10000) {
+            blackoutAlpha = min(blackoutAlpha + 3, 255);
+            if (blackoutAlpha >= 255) {
+                exit();
             }
         }
     }
