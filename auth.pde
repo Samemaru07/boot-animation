@@ -7,10 +7,10 @@ void keyPressed() {
         if (key == ENTER || key == RETURN) {
             authDone = true;
             pwVisible = false;
-            if (pwInput.length() > 0)
+            if (pwInput.equals(secretPassword))
                 doSuccess();
             else
-                doFail("NULL INPUT");
+                doFail("INVALID CODE");
         } else if (key == BACKSPACE) {
             if (pwInput.length() > 0)
                 pwInput = pwInput.substring(0, pwInput.length() - 1);
@@ -55,5 +55,12 @@ void onFlashDone() {
         statusText = "SYSTEM LOCKED :: CONTACT ADMINISTRATOR";
         progWidth = 100;
         progColor = COL_ERR;
+    }
+}
+
+void loadPassword() {
+    String[] lines = loadStrings("secret.txt");
+    if (lines != null && lines.length > 0) {
+        secretPassword = lines[0].trim();
     }
 }
