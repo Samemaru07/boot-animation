@@ -146,14 +146,6 @@ void draw() {
         fill(0, blackoutAlpha);
         rect(0, 0, width, height);
     }
-
-    // デバッグ表示（確認後に削除）
-    fill(255);
-    textSize(16);
-    textAlign(LEFT, TOP);
-    text("phase=" + phase + " ePhase=" + ePhase +
-             " pipeDrawT=" + nf(pipeDrawT, 1, 2),
-         10, height - 30);
 }
 
 void drawPanel(float x, float y, float w, float h) {
