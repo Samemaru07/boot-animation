@@ -314,15 +314,6 @@ void drawPCCase(float px, float py, float pw, float ph) {
     // 対角線
     line(cfX1, cfY1, cfX3, cfY3);
     line(cfX2, cfY2, cfX4, cfY4);
-
-    // === デバッグ：マウス座標表示 ===
-    float mx = mouseX - (px + pw / 2 - 100); // パネル中心からの相対座標
-    float my = mouseY - (py + ph / 2);
-    fill(255, 255, 255);
-    noStroke();
-    textSize(10);
-    textAlign(LEFT, TOP);
-    text((int)mx + ", " + (int)my, mx + 5, my);
 }
 
 void drawPCLabels(float op) {
